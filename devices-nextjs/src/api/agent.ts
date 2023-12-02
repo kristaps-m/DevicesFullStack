@@ -52,9 +52,9 @@ const DeviceCatalog = {
   list: () => requests.get("devices"),
 };
 
-const agent = {
+const Agent = {
   DeviceCatalog,
   TestErrors,
 };
 
-export default agent;
+export default Agent;

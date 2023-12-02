@@ -238,6 +238,112 @@ gap: 20px
                       </div>
                     </div>
                   </div>
+                  {/* <div className="self-stretch pl-5 pr-2 py-3 bg-white rounded-md shadow border border-neutral-300 justify-start items-center gap-4 inline-flex">
+                    <div className="grow shrink basis-0 h-[38px] justify-start items-center gap-4 flex">
+                      <div className="grow shrink basis-0 h-[38px] justify-start items-center gap-3 flex">
+                        <div className="w-1.5 h-1.5 bg-rose-700 rounded-full"></div>
+                        <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                          <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
+                            Side Entry Intercom
+                          </div>
+                          <div className="self-stretch">
+                            <span className="text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                              Connection:{" "}
+                            </span>
+                            <span className="text-gray-600 text-xs font-medium font-['Inter'] leading-none">
+                              0%
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                        <div className="self-stretch opacity-70 text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                          Model
+                        </div>
+                        <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
+                          2N Verso
+                        </div>
+                      </div>
+                      <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                        <div className="self-stretch opacity-70 text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                          Con-stat
+                        </div>
+                        <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
+                          90/10 messages over 28 days
+                        </div>
+                      </div>
+                    </div>
+                    <div className="justify-start items-start gap-1 flex">
+                      <div className="w-[87px] px-4 py-2 bg-gray-100 rounded-md justify-center items-center gap-2 flex">
+                        <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
+                          Settings
+                        </div>
+                      </div>
+                      <div className="w-[81px] px-4 py-2 bg-gray-100 rounded-md justify-center items-center gap-2 flex">
+                        <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
+                          Control
+                        </div>
+                      </div>
+                      <div className="w-9 h-9 bg-white rounded-md justify-center items-center flex">
+                        <div className="w-4 h-4 relative">
+                          <div className="w-4 h-4 left-0 top-0 absolute"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> */}
+                  {/* <div className="self-stretch pl-5 pr-2 py-3 bg-white rounded-md border border-gray-300 justify-start items-center gap-4 inline-flex">
+                    <div className="grow shrink basis-0 h-[38px] justify-start items-center gap-4 flex">
+                      <div className="grow shrink basis-0 h-[38px] justify-start items-center gap-3 flex">
+                        <div className="w-1.5 h-1.5 bg-rose-700 rounded-full"></div>
+                        <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                          <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
+                            Main Entry Intercom
+                          </div>
+                          <div className="self-stretch">
+                            <span className="text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                              Connection:{" "}
+                            </span>
+                            <span className="text-gray-600 text-xs font-medium font-['Inter'] leading-none">
+                              0%
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                        <div className="self-stretch opacity-70 text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                          Model
+                        </div>
+                        <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
+                          2N Verso
+                        </div>
+                      </div>
+                      <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                        <div className="self-stretch opacity-70 text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                          Con-stat
+                        </div>
+                        <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
+                          0 messages over 28 days
+                        </div>
+                      </div>
+                    </div>
+                    <div className="justify-start items-start gap-1 flex">
+                      <div className="w-[87px] px-4 py-2 opacity-0 bg-gray-100 rounded-md justify-center items-center gap-2 flex">
+                        <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
+                          Settings
+                        </div>
+                      </div>
+                      <div className="w-[81px] px-4 py-2 opacity-0 bg-gray-100 rounded-md justify-center items-center gap-2 flex">
+                        <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
+                          Control
+                        </div>
+                      </div>
+                      <div className="w-9 h-9 bg-white rounded-md justify-center items-center flex">
+                        <div className="w-4 h-4 relative">
+                          <div className="w-4 h-4 left-0 top-0 absolute"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> */}
                 </div>
                 {/* <p>{oneDevice.id}</p>
                 <p>{oneDevice.name}</p>
