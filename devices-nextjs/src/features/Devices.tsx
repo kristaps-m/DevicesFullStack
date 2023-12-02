@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Agent from "@/api/Agent";
 import OneDevice from "@/app/Models/OneDevice";
+import AppPagination, { paginate } from "@/Component/AppPagination";
 
 interface DataRoot {
   devices: OneDevice[];
@@ -15,7 +16,10 @@ function calculateDaysDifference(givenDate: string) {
   const currentDate: any = new Date();
 
   // Calculate the difference in milliseconds
-  const timeDifference = givenDateTime - currentDate;
+  const timeDifference =
+    currentDate -
+    givenDateTime -
+    (Math.floor(Math.random() * 25) + 4) * (1000 * 60 * 60 * 24);
 
   // Convert the difference to days
   const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
@@ -26,6 +30,11 @@ function calculateDaysDifference(givenDate: string) {
 export default function Devices() {
   const [devicesList, setDevicesList] = useState<OneDevice[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   useEffect(() => {
     Agent.DeviceCatalog.list()
@@ -36,6 +45,12 @@ export default function Devices() {
       .finally(() => setLoading(false));
   }, []);
 
+  const theDivicesLength = devicesList.length;
+  const paginatedPosts: OneDevice[] = paginate(
+    devicesList,
+    currentPage,
+    pageSize
+  );
   // devicesList.push({
   //   id: 1,
   //   name: "Aesvx",
@@ -179,62 +194,63 @@ gap: 20px
           {loading ? (
             <h1>LOADING</h1>
           ) : (
-            devicesList.map((oneDevice) => (
-              <div key={oneDevice.id}>
-                <div className="self-stretch h-[214px] px-5 pb-5 flex-col justify-start items-start gap-1 flex">
-                  <div className="self-stretch pl-5 pr-2 py-3 bg-white rounded-md border border-gray-300 justify-start items-center gap-4 inline-flex">
-                    <div className="grow shrink basis-0 h-[38px] justify-start items-center gap-4 flex">
-                      <div className="grow shrink basis-0 h-[38px] justify-start items-center gap-3 flex">
-                        <div className="w-1.5 h-1.5 bg-rose-700 rounded-full"></div>
-                        <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                          <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
-                            Main Entry Intercom
-                          </div>
-                          <div className="self-stretch">
-                            <span className="text-gray-600 text-xs font-normal font-['Inter'] leading-none">
-                              Connection:{" "}
-                            </span>
-                            <span className="text-gray-600 text-xs font-medium font-['Inter'] leading-none">
-                              0%
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+            paginatedPosts.map((oneDevice) => (
+              <div
+                key={oneDevice.id}
+                className="self-stretch h-[214px] px-1 pb-1 flex-col justify-start items-start gap-1 flex"
+              >
+                <div className="self-stretch pl-5 pr-2 py-3 bg-white rounded-md border border-gray-300 justify-start items-center gap-4 inline-flex">
+                  <div className="grow shrink basis-0 h-[38px] justify-start items-center gap-4 flex">
+                    <div className="grow shrink basis-0 h-[38px] justify-start items-center gap-3 flex">
+                      <div className="w-1.5 h-1.5 bg-rose-700 rounded-full"></div>
                       <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                        <div className="self-stretch opacity-70 text-gray-600 text-xs font-normal font-['Inter'] leading-none">
-                          Model
-                        </div>
                         <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
-                          {oneDevice.model}
+                          Main Entry Intercom
                         </div>
-                      </div>
-                      <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                        <div className="self-stretch opacity-70 text-gray-600 text-xs font-normal font-['Inter'] leading-none">
-                          Con-stat
-                        </div>
-                        <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
-                          {oneDevice.messagesRecieved}/
-                          {oneDevice.messagesMaximum} messages over{" "}
-                          {calculateDaysDifference(oneDevice.connectionStart)}{" "}
-                          days
+                        <div className="self-stretch">
+                          <span className="text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                            Connection:{" "}
+                          </span>
+                          <span className="text-gray-600 text-xs font-medium font-['Inter'] leading-none">
+                            0%
+                          </span>
                         </div>
                       </div>
                     </div>
-                    <div className="justify-start items-start gap-1 flex">
-                      <div className="w-[87px] px-4 py-2 opacity-0 bg-gray-100 rounded-md justify-center items-center gap-2 flex">
-                        <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
-                          Settings
-                        </div>
+                    <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                      <div className="self-stretch opacity-70 text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                        Model
                       </div>
-                      <div className="w-[81px] px-4 py-2 opacity-0 bg-gray-100 rounded-md justify-center items-center gap-2 flex">
-                        <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
-                          Control
-                        </div>
+                      <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
+                        {oneDevice.model}
                       </div>
-                      <div className="w-9 h-9 bg-white rounded-md justify-center items-center flex">
-                        <div className="w-4 h-4 relative">
-                          <div className="w-4 h-4 left-0 top-0 absolute"></div>
-                        </div>
+                    </div>
+                    <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                      <div className="self-stretch opacity-70 text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                        Con-stat
+                      </div>
+                      <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
+                        {oneDevice.messagesRecieved}/{oneDevice.messagesMaximum}{" "}
+                        messages over{" "}
+                        {calculateDaysDifference(oneDevice.connectionStart)}{" "}
+                        days
+                      </div>
+                    </div>
+                  </div>
+                  <div className="justify-start items-start gap-1 flex">
+                    <div className="w-[87px] px-4 py-2 opacity-0 bg-gray-100 rounded-md justify-center items-center gap-2 flex">
+                      <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
+                        Settings
+                      </div>
+                    </div>
+                    <div className="w-[81px] px-4 py-2 opacity-0 bg-gray-100 rounded-md justify-center items-center gap-2 flex">
+                      <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
+                        Control
+                      </div>
+                    </div>
+                    <div className="w-9 h-9 bg-white rounded-md justify-center items-center flex">
+                      <div className="w-4 h-4 relative">
+                        <div className="w-4 h-4 left-0 top-0 absolute"></div>
                       </div>
                     </div>
                   </div>
@@ -250,9 +266,16 @@ gap: 20px
           {/*  */}
 
           {/*  */}
+          <AppPagination
+            items={theDivicesLength}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            onPageChange={onPageChange}
+          />
           <div className="self-stretch pl-5 pr-3 py-3 bg-gray-100 rounded-bl-md rounded-br-md justify-start items-center gap-5 inline-flex">
             <div className="grow shrink basis-0 text-gray-600 text-sm font-normal font-['Inter'] leading-snug">
-              Showing 1 - 3 of {devicesList.length} devices
+              Showing {currentPage * pageSize - pageSize + 1} -{" "}
+              {currentPage * pageSize} of {theDivicesLength} devices
             </div>
           </div>
         </div>
