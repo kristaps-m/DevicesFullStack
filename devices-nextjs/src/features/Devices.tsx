@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Agent from "@/api/Agent";
 import OneDevice from "@/app/Models/OneDevice";
-import AppPagination, { paginate } from "@/Component/AppPagination";
+import AppPagination, { paginate } from "@/Components/AppPagination";
 
 interface DataRoot {
   devices: OneDevice[];
