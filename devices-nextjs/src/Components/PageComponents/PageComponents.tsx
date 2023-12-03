@@ -5,15 +5,12 @@ Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcN
 
 import PropTypes from "prop-types";
 import React from "react";
-// import { Icon24PxApartments1 } from "./../../Icon24PxApartments1/";
 import { Icon24PxApartments1 } from "@/icons/Icon24PxApartments1/Icon24PxApartments1";
 import { Icon24PxDashboard1 } from "@/icons/Icon24PxDashboard1";
 import { Icon24PxDeviceMonitoring } from "@/icons/Icon24PxDeviceMonitoring";
 import { Icon24PxGeneralSettings2 } from "@/icons/Icon24PxGeneralSettings2";
 import { IconCustomChevronDown1 } from "@/icons/IconCustomChevronDown1";
-import { Logotype } from "../Logotype";
-import { Icon16PxChevronRight3 } from "@/icons/Icon16PxChevronRight3";
-import { Icon16PxCrossmark } from "@/icons/Icon16PxCrossmark";
+import { IconMainLogo } from "@/icons/IconMainLogo";
 
 interface Props {
   className: any;
@@ -21,6 +18,8 @@ interface Props {
   valueClassName: any;
   icon24PxDeviceMonitoringColor: string;
 }
+
+const tailwindCSSForIcons = "!absolute !w-[24px] !h-[24px] !top-0 !left-0";
 
 export const PageComponents = ({
   className,
@@ -33,23 +32,25 @@ export const PageComponents = ({
       className={`flex flex-col w-[1440px] items-center justify-center gap-[10px] px-[20px] py-[16px] relative bg-x01-theme-colors02-neutral-colorn-800 border-b [border-bottom-style:solid] border-[#e2e3e91a] ${className}`}
     >
       <div className="flex max-w-[1170px] items-center relative self-stretch w-full flex-[0_0_auto]">
-        <div className="inline-flex flex-col items-start gap-[10px] pl-0 pr-[52px] py-0 relative flex-[0_0_auto]">
-          {/* <Logotype shape={logotypeShape} /> */}
-          <Icon16PxChevronRight3 className="!absolute !w-[24px] !h-[24px] !top-0 !left-0" />
-          <Icon16PxCrossmark className="!absolute !w-[24px] !h-[24px] !top-0 !left-0" />
+        <div className="inline-flex flex-col items-start gap-[100px] pl-0 pr-[52px] py-0 relative flex-[0_0_auto]">
+          {"      "}
         </div>
         <div className="inline-flex items-center gap-[32px] relative flex-[0_0_auto]">
+          <div className="relative w-[106px] h-[24px]">
+            <div className="absolute top-px left-[32px] [font-family:'Inter',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-500 text-[14px] tracking-[-0.20px] leading-[22px] whitespace-nowrap"></div>
+            <IconMainLogo className="!absolute !w-full !h-[36px]" />
+          </div>
           <div className="relative w-[106px] h-[24px]">
             <div className="absolute top-px left-[32px] [font-family:'Inter',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-500 text-[14px] tracking-[-0.20px] leading-[22px] whitespace-nowrap">
               Dashboard
             </div>
-            <Icon24PxDashboard1 className="!absolute !w-[24px] !h-[24px] !top-0 !left-0" />
+            <Icon24PxDashboard1 className={tailwindCSSForIcons} />
           </div>
           <div className="relative w-[111px] h-[24px]">
             <div className="absolute top-px left-[32px] [font-family:'Inter',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-500 text-[14px] tracking-[-0.20px] leading-[22px] whitespace-nowrap">
               Connectors
             </div>
-            <Icon24PxApartments1 className="!absolute !w-[24px] !h-[24px] !top-0 !left-0" />
+            <Icon24PxApartments1 className={tailwindCSSForIcons} />
           </div>
           <div className="relative w-[86px] h-[24px]">
             <div
@@ -58,7 +59,7 @@ export const PageComponents = ({
               Devices
             </div>
             <Icon24PxDeviceMonitoring
-              className="!absolute !w-[24px] !h-[24px] !top-0 !left-0"
+              className={tailwindCSSForIcons}
               color={icon24PxDeviceMonitoringColor}
             />
           </div>
@@ -66,7 +67,7 @@ export const PageComponents = ({
             <div className="absolute top-px left-[32px] [font-family:'Inter',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-500 text-[14px] tracking-[-0.20px] leading-[22px] whitespace-nowrap">
               General Settings
             </div>
-            <Icon24PxGeneralSettings2 className="!absolute !w-[24px] !h-[24px] !top-0 !left-0" />
+            <Icon24PxGeneralSettings2 className={tailwindCSSForIcons} />
           </div>
         </div>
         <div className="inline-flex items-center justify-end gap-[8px] absolute top-[4px] left-[1066px]">

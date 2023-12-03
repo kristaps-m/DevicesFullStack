@@ -124,11 +124,6 @@ export const FromFigmaAnimaPlug = (): JSX.Element => {
                   {/* <Right className="!relative !w-[16px] !h-[16px]" /> */}
                 </div>
               </div>
-              <img
-                className="absolute w-[15px] h-[21px] top-[14px] left-[758px]"
-                alt="Cursor default"
-                src="default.svg"
-              />
             </div>
             {/* This was place for one of devices that I deleted */}
           </div>
