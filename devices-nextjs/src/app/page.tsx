@@ -1,14 +1,15 @@
 import Devices from "@/Features/Devices";
 import Devices2 from "@/Features/Devices2";
+import { FromFigmaAnimaPlug } from "@/Features/FromFigmaAnimaPlug";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <main>
       <div>
-        <h1>HELLO</h1>
         {/* <Devices /> */}
-        <Devices2 />
+        {/* <Devices2 /> */}
+        <FromFigmaAnimaPlug />
       </div>
     </main>
   );
