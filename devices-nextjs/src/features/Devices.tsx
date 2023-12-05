@@ -1,8 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Agent from "@/api/Agent";
+import React, { useEffect, useState } from "react";
+import { ButtonDefault } from "../Components/ButtonDefault";
+import { IconSearch } from "../Components/IconSearch";
+import { Label } from "../Components/Label";
+import { PageComponents } from "../Components/PageComponents";
+import { PageComponentsWrapper } from "../Components/PageComponentsWrapper";
 import OneDevice from "@/app/Models/OneDevice";
 import AppPagination, { paginate } from "@/Components/AppPagination";
+import Agent from "@/api/Agent";
+// import { Right } from "./../Components/Right";
 
 interface DataRoot {
   devices: OneDevice[];
@@ -27,7 +33,7 @@ function calculateDaysDifference(givenDate: string) {
   return daysDifference;
 }
 
-export default function Devices() {
+export const Devices = (): JSX.Element => {
   const [devicesList, setDevicesList] = useState<OneDevice[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,259 +57,155 @@ export default function Devices() {
     currentPage,
     pageSize
   );
-  // devicesList.push({
-  //   id: 1,
-  //   name: "Aesvx",
-  //   model: "3C IXX",
-  //   messagesRecieved: 233,
-  //   messagesMaximum: 143,
-  //   connectionStart: "2023-09-28 19:26:32",
-  // });
-  //console.log(devicesList);
 
-  /*
-  width: Hug (1,440px)
-height: Hug (169px)
-padding: 0px, 0px, 20px, 0px
-gap: 20px
-
-  */
   return (
-    <>
-      <div className="w-[1440px] h-[72px] px-5 py-4 bg-gray-800 border-b border-zinc-200 border-opacity-10 flex-col justify-center items-center gap-2.5 inline-flex">
-        <div className="self-stretch justify-start items-center inline-flex">
-          <div className="pr-[52px] flex-col justify-start items-start gap-2.5 inline-flex">
-            <div className="w-[66px] h-10 relative">
-              <img
-                className="w-[66px] h-10 left-0 top-0 absolute"
-                src="https://via.placeholder.com/66x40"
-              />
-              <img
-                className="w-[46.94px] h-[20.80px] left-[9.53px] top-[9.60px] absolute"
-                src="https://via.placeholder.com/47x21"
-              />
-            </div>
-          </div>
-          <div className="justify-start items-center gap-8 flex">
-            <div className="relative">
-              {/* <div className="left-[32px] top-[1px] absolute text-neutral-300 text-sm font-medium font-['Inter'] leading-snug">
-                Dashboard
-              </div> */}
-              <div className="text-zinc-200 text-sm font-medium font-['Inter'] leading-snug">
-                Dashboard
+    <div className="flex flex-col h-[900px] items-start relative bg-x01-theme-colors02-neutral-colorn-300">
+      <div className="inline-flex gap-[20px] pt-0 pb-[20px] px-0 bg-x01-theme-colors02-neutral-colorn-800 flex-col items-center relative flex-[0_0_auto]">
+        <PageComponents
+          className="!flex-[0_0_auto]"
+          deviceMonitoringColor="#3498DB"
+          logotypeLogotypeClassName="bg-[url(shape-3.svg)]"
+          logotypeShape="shape-4.svg"
+          valueClassName="!text-x01-theme-colors02-neutral-colorn-100"
+        />
+        <div className="max-w-[1170px] w-[1170px] items-center gap-[12px] flex-[0_0_auto] flex relative">
+          <div className="flex-col items-start gap-[12px] flex-1 grow flex relative">
+            <div className="inline-flex items-start gap-[8px] relative flex-[0_0_auto]">
+              <div className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-500 text-[14px] tracking-[-0.20px] leading-[normal]">
+                Home
               </div>
-              <div className="w-6 h-6 left-0 top-0 absolute flex-col justify-start items-start inline-flex">
-                <div className="w-6 h-6"></div>
+              <div className="relative w-fit opacity-20 [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-500 text-[14px] tracking-[-0.20px] leading-[normal]">
+                /
               </div>
             </div>
-            <div className="relative">
-              {/* <div className="left-[32px] top-[1px] absolute text-neutral-300 text-sm font-medium font-['Inter'] leading-snug">
-                Connectors
-              </div> */}
-              <div className="text-zinc-200 text-sm font-medium font-['Inter'] leading-snug">
-                Connectors
-              </div>
-              <div className="w-6 h-6 left-0 top-0 absolute flex-col justify-start items-start inline-flex">
-                <div className="w-6 h-6"></div>
-              </div>
-            </div>
-            <div className="relative">
-              {/* <div className="left-[32px] top-[1px] absolute text-white text-sm font-medium font-['Inter'] leading-snug">
-                Devices
-              </div> */}
-              <div className="text-zinc-200 text-sm font-medium font-['Inter'] leading-snug">
-                Devices
-              </div>
-              <div className="w-6 h-6 left-0 top-0 absolute flex-col justify-start items-start inline-flex">
-                <div className="w-6 h-6"></div>
-              </div>
-            </div>
-            <div className="relative">
-              {/* <div className="left-[32px] top-[1px] absolute text-neutral-300 text-sm font-medium font-['Inter'] leading-snug">
-                General Settings
-              </div> */}
-              <div className="text-zinc-200 text-sm font-medium font-['Inter'] leading-snug">
-                General Settings
-              </div>
-              <div className="w-6 h-6 left-0 top-0 absolute flex-col justify-start items-start inline-flex">
-                <div className="w-6 h-6"></div>
-              </div>
-            </div>
-          </div>
-          <div className="justify-end items-right gap-2 flex">
-            <div className="w-8 h-8 relative">
-              <div className="w-8 h-8 left-0 top-0 absolute bg-gradient-to-bl from-slate-300 to-slate-400 rounded-full"></div>
-              <div className="w-[22px] left-[5px] top-[7px] absolute text-center text-gray-800 text-sm font-semibold font-['Inter']">
-                R
-              </div>
-            </div>
-            <div className="justify-end items-center gap-1 flex">
-              <div className="text-zinc-200 text-sm font-medium font-['Inter'] leading-snug">
-                Roberts
-              </div>
-              <div className="w-2 h-1.5 relative"></div>
+            <div className="relative self-stretch [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[21px] tracking-[-0.30px] leading-[28px]">
+              Devices
             </div>
           </div>
         </div>
       </div>
-      {/* ------------------------------------------------------------------------------ */}
-      <div className="w-[1440px] h-[510px] pb-[174px] flex-col justify-start items-center inline-flex">
-        <div className="w-[1440px] h-10 bg-gray-800"></div>
-        <div className="h-[336px] bg-white rounded-md shadow border border-indigo-900 border-opacity-20 flex-col justify-start items-start flex">
-          <div className="self-stretch py-5 justify-between items-center inline-flex">
-            <div className="grow shrink basis-0 h-9 px-5 justify-between items-center flex">
-              <div className="justify-start items-start gap-1 flex">
-                <div className="pl-4 pr-1.5 py-1.5 bg-white rounded-md border border-gray-300 justify-center items-center gap-2.5 flex">
-                  <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
+      <div className="flex w-[1440px] pt-0 pb-[174px] px-0 flex-col items-center relative flex-[0_0_auto]">
+        <div className="absolute w-[1440px] h-[40px] top-0 left-0 bg-x01-theme-colors02-neutral-colorn-800" />
+        <div className="flex-col w-[1172px] items-start flex-[0_0_auto] mt-[-1.00px] mb-[-1.00px] bg-x01-theme-colors02-neutral-colorn-100 rounded-[6px] border border-solid border-[#26337326] shadow-[0px_4px_8px_1px_#0c11260d] flex relative">
+          <div className="flex items-center justify-around gap-[12px] px-0 py-[20px] relative self-stretch w-full flex-[0_0_auto]">
+            <div className="flex items-center justify-between px-[20px] py-0 relative flex-1 grow">
+              <div className="inline-flex items-start gap-[4px] relative flex-[0_0_auto]">
+                <div className="gap-[10px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors02-neutral-colorn-100 border border-solid border-x01-theme-colors02-neutral-colorn-400 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]">
+                  <div className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap">
                     Online
                   </div>
-                  <div className="px-2 py-1 bg-gray-100 rounded-md justify-center items-center gap-2.5 flex">
-                    <div className="text-gray-600 text-xs font-medium font-['Inter'] leading-none">
-                      2
-                    </div>
-                  </div>
+                  <Label
+                    className="!flex-[0_0_auto]"
+                    clearOption={false}
+                    text="2"
+                    divClassName=""
+                  />
                 </div>
-                <div className="pl-4 pr-1.5 py-1.5 bg-blue-500 rounded-md justify-center items-center gap-2 flex">
-                  <div className="text-center text-white text-sm font-medium font-['Inter'] leading-tight">
+                <div className="gap-[8px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors01-primary-colorp-300 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]">
+                  <div className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap">
                     Offline
                   </div>
-                  <div className="px-2 py-1 bg-blue-100 rounded-md justify-center items-center gap-2.5 flex">
-                    <div className="text-sky-900 text-xs font-medium font-['Inter'] leading-none">
-                      3
-                    </div>
-                  </div>
+                  <Label
+                    className="!flex-[0_0_auto] !bg-x01-theme-colors01-primary-colorp-100"
+                    clearOption={false}
+                    divClassName="!text-x01-theme-colors01-primary-colorp-500"
+                    text="3"
+                  />
                 </div>
               </div>
-              <div className="w-[300px] pl-3 pr-4 py-[9px] bg-gray-100 rounded-md flex-col justify-start items-start gap-2.5 inline-flex">
-                <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                  <div className="w-4 h-4 relative">
-                    <div className="w-4 h-4 left-0 top-0 absolute"></div>
-                    <img
-                      className="w-4 h-4 left-0 top-0 absolute"
-                      src="https://via.placeholder.com/16x16"
-                    />
-                  </div>
-                  <div className="grow shrink basis-0 text-gray-600 text-sm font-normal font-['Inter'] leading-[18px]">
+              <div className="flex flex-col w-[300px] items-start gap-[10px] pl-[12px] pr-[16px] py-[9px] relative bg-x01-theme-colors02-neutral-colorn-200 rounded-[6px]">
+                <div className="items-center gap-[8px] self-stretch w-full flex-[0_0_auto] flex relative">
+                  <IconSearch className="bg-[url(icon-2.svg)] !relative" />
+                  <div className="relative flex-1 [font-family:'Inter-Regular',Helvetica] font-normal text-x01-theme-colors02-neutral-colorn-700 text-[14px] tracking-[-0.20px] leading-[18px]">
                     Quick search..
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {/*  */}
-          {loading ? (
-            <h1>LOADING</h1>
-          ) : (
-            paginatedPosts.map((oneDevice) => (
-              <div
-                key={oneDevice.id}
-                className="self-stretch h-[214px] px-1 pb-1 flex-col justify-start items-start gap-1 flex"
-              >
-                <div className="self-stretch pl-5 pr-2 py-3 bg-white rounded-md border border-gray-300 justify-start items-center gap-4 inline-flex">
-                  <div className="grow shrink basis-0 h-[38px] justify-start items-center gap-4 flex">
-                    <div className="grow shrink basis-0 h-[38px] justify-start items-center gap-3 flex">
-                      <div className="w-1.5 h-1.5 bg-rose-700 rounded-full"></div>
-                      <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                        <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
-                          Main Entry Intercom
+          <div className="flex-col items-start gap-[4px] pt-0 pb-[20px] px-[20px] self-stretch w-full flex-[0_0_auto] flex relative">
+            {/* ----------------------------------------------------------- */}
+            {loading ? (
+              <h1>LOADING</h1>
+            ) : (
+              paginatedPosts.map((oneDevice) => (
+                <div
+                  className="flex items-center gap-[16px] pl-[20px] pr-[8px] py-[12px] relative self-stretch w-full flex-[0_0_auto] ml-[-1.00px] mr-[-1.00px] bg-x01-theme-colors02-neutral-colorn-100 rounded-[6px] border border-solid border-x01-theme-colors02-neutral-colorn-500 shadow-[0px_4px_8px_1px_#0c11260d]"
+                  key={oneDevice.id}
+                >
+                  <div className="flex items-center gap-[16px] relative flex-1 grow">
+                    <div className="max-w-[250px] items-center gap-[12px] flex relative flex-1 grow">
+                      <div className="relative w-[6px] h-[6px] bg-x02-semantic-colors01-dangerdanger-300 rounded-[3px]" />
+                      <div className="flex-col items-start flex-1 grow flex relative">
+                        <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] tracking-[-0.20px] leading-[22px]">
+                          Side Entry Intercom
                         </div>
-                        <div className="self-stretch">
-                          <span className="text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                        <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] font-normal text-x01-theme-colors02-neutral-colorn-700 text-[12px] tracking-[-0.20px] leading-[16px]">
+                          <span className="font-paragraph-extra-small font-[number:var(--paragraph-extra-small-font-weight)] text-[#5c5f70] text-[length:var(--paragraph-extra-small-font-size)] tracking-[var(--paragraph-extra-small-letter-spacing)] leading-[var(--paragraph-extra-small-line-height)] [font-style:var(--paragraph-extra-small-font-style)]">
                             Connection:{" "}
                           </span>
-                          <span className="text-gray-600 text-xs font-medium font-['Inter'] leading-none">
+                          <span className="[font-family:'Inter-Medium',Helvetica] font-medium">
                             0%
                           </span>
-                        </div>
+                        </p>
                       </div>
                     </div>
-                    <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                      <div className="self-stretch opacity-70 text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                    <div className="flex-col max-w-[140px] items-start flex relative flex-1 grow">
+                      <div className="relative self-stretch mt-[-1.00px] opacity-70 font-paragraph-extra-small font-[number:var(--paragraph-extra-small-font-weight)] text-x01-theme-colors02-neutral-colorn-700 text-[length:var(--paragraph-extra-small-font-size)] tracking-[var(--paragraph-extra-small-letter-spacing)] leading-[var(--paragraph-extra-small-line-height)] [font-style:var(--paragraph-extra-small-font-style)]">
                         Model
                       </div>
-                      <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
+                      <div className="relative self-stretch [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] tracking-[-0.20px] leading-[22px]">
                         {oneDevice.model}
                       </div>
                     </div>
-                    <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                      <div className="self-stretch opacity-70 text-gray-600 text-xs font-normal font-['Inter'] leading-none">
+                    <div className="flex flex-col items-start relative flex-1 grow">
+                      <div className="relative self-stretch mt-[-1.00px] opacity-70 font-paragraph-extra-small font-[number:var(--paragraph-extra-small-font-weight)] text-x01-theme-colors02-neutral-colorn-700 text-[length:var(--paragraph-extra-small-font-size)] tracking-[var(--paragraph-extra-small-letter-spacing)] leading-[var(--paragraph-extra-small-line-height)] [font-style:var(--paragraph-extra-small-font-style)]">
                         Con-stat
                       </div>
-                      <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
+                      <p className="relative self-stretch [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] tracking-[-0.20px] leading-[22px]">
                         {oneDevice.messagesRecieved}/{oneDevice.messagesMaximum}{" "}
                         messages over{" "}
                         {calculateDaysDifference(oneDevice.connectionStart)}{" "}
                         days
-                      </div>
+                      </p>
                     </div>
                   </div>
-                  <div className="justify-start items-start gap-1 flex">
-                    <div className="w-[87px] px-4 py-2 opacity-0 bg-gray-100 rounded-md justify-center items-center gap-2 flex">
-                      <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
-                        Settings
-                      </div>
-                    </div>
-                    <div className="w-[81px] px-4 py-2 opacity-0 bg-gray-100 rounded-md justify-center items-center gap-2 flex">
-                      <div className="text-center text-gray-800 text-sm font-medium font-['Inter'] leading-tight">
-                        Control
-                      </div>
-                    </div>
-                    <div className="w-9 h-9 bg-white rounded-md justify-center items-center flex">
-                      <div className="w-4 h-4 relative">
-                        <div className="w-4 h-4 left-0 top-0 absolute"></div>
-                      </div>
+                  <div className="inline-flex items-start gap-[4px] relative flex-[0_0_auto]">
+                    <ButtonDefault
+                      className="!h-[36px] !gap-[8px] !flex-[0_0_auto] !bg-x01-theme-colors02-neutral-colorn-200"
+                      text="Settings"
+                      valueClassName="!text-x01-theme-colors02-neutral-colorn-800"
+                    />
+                    <ButtonDefault
+                      className="!h-[36px] !gap-[8px] !flex-[0_0_auto] !bg-x01-theme-colors02-neutral-colorn-200"
+                      text="Control"
+                      valueClassName="!text-x01-theme-colors02-neutral-colorn-800"
+                    />
+                    <div className="flex w-[36px] h-[36px] items-center justify-center relative bg-x01-theme-colors02-neutral-colorn-100 rounded-[6px]">
+                      {/* <Right className="!relative !w-[16px] !h-[16px]" /> */}
                     </div>
                   </div>
                 </div>
-                {/* <p>{oneDevice.id}</p>
-                <p>{oneDevice.name}</p>
-                <p>{oneDevice.model}</p>
-                <p>{oneDevice.connectionStart}</p>
-                <br /> */}
-              </div>
-            ))
-          )}
-          {/*  */}
+              ))
+            )}
 
-          {/*  */}
-          <AppPagination
-            items={theDivicesLength}
-            currentPage={currentPage}
-            pageSize={pageSize}
-            onPageChange={onPageChange}
-          />
-          <div className="self-stretch pl-5 pr-3 py-3 bg-gray-100 rounded-bl-md rounded-br-md justify-start items-center gap-5 inline-flex">
-            <div className="grow shrink basis-0 text-gray-600 text-sm font-normal font-['Inter'] leading-snug">
+            <AppPagination
+              items={theDivicesLength}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              onPageChange={onPageChange}
+            />
+            {/* ----------------------------------------------------------- */}
+          </div>
+          <div className="flex items-center gap-[20px] pl-[20px] pr-[12px] py-[12px] relative self-stretch w-full flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200 rounded-[0px_0px_6px_6px]">
+            <p className="relative flex-1 mt-[-1.00px] font-paragraph-default font-[number:var(--paragraph-default-font-weight)] text-x01-theme-colors02-neutral-colorn-700 text-[length:var(--paragraph-default-font-size)] tracking-[var(--paragraph-default-letter-spacing)] leading-[var(--paragraph-default-line-height)] [font-style:var(--paragraph-default-font-style)]">
               Showing {currentPage * pageSize - pageSize + 1} -{" "}
               {currentPage * pageSize} of {theDivicesLength} devices
-            </div>
+            </p>
           </div>
+          <PageComponentsWrapper className="!absolute !left-0 !top-[846px]" />
         </div>
       </div>
-    </>
-    // <div>
-    //   <div className="w-full md:w-440 h-169 p-0 md:p-20 gap-20">SUP</div>
-    //   <h1>HELLO</h1>
-    //   {/* {devicesList
-    //     ? devicesList.map((oneDevice) => (
-    //         <div key={oneDevice.id}>
-    //           <p>{oneDevice.name}</p>
-    //         </div>
-    //       ))
-    //     : "Loading"} */}
-    //   {loading ? (
-    //     <h1>LOADING</h1>
-    //   ) : (
-    //     devicesList.map((oneDevice) => (
-    //       <div key={oneDevice.id}>
-    //         <p>{oneDevice.id}</p>
-    //         <p>{oneDevice.name}</p>
-    //         <p>{oneDevice.model}</p>
-    //         <p>{oneDevice.connectionStart}</p>
-    //         <br />
-    //       </div>
-    //     ))
-    //   )}
-    // </div>
+    </div>
   );
-}
+};
