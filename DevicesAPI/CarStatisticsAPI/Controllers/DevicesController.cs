@@ -17,26 +17,26 @@ namespace DevicesAPI.Controllers
 
         [Route("add")]
         [HttpPost]
-        public IActionResult AddCarSpeedStatistic(Device carSpeedStatistic)
+        public IActionResult AddDevice(Device device)
         {
-            _devicescService.Create(carSpeedStatistic);
+            _devicescService.Create(device);
 
-            return Ok(carSpeedStatistic);
+            return Ok(device);
         }
 
-        //[Route("{id}")]
-        //[HttpPut]
-        //public IActionResult UpdateCarSpeedStatistic(int id, Device newCarSpeedStatistic)
-        //{
-        //    var carSpeedStatisticToUpdate = _devicescService.UpdateCarSpeedStatistic(newCarSpeedStatistic, id);
+        [Route("{id}")]
+        [HttpPut]
+        public IActionResult UpdateDevice(int id, Device newDevice)
+        {
+            var carSpeedStatisticToUpdate = _devicescService.UpdateDevice(newDevice, id);
 
-        //    if (carSpeedStatisticToUpdate == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (carSpeedStatisticToUpdate == null)
+            {
+                return NotFound();
+            }
 
-        //    return Created("", carSpeedStatisticToUpdate);
-        //}
+            return Created("", carSpeedStatisticToUpdate);
+        }
 
         [Route("{id}")]
         [HttpDelete]
@@ -79,16 +79,16 @@ namespace DevicesAPI.Controllers
 
         [Route("{id}")]
         [HttpGet]
-        public IActionResult GetOneCarSpeedStatistic(int id)
+        public IActionResult GetOneDevice(int id)
         {
-            var carSpeedStatistic = _devicescService.GetById(id);
+            var device = _devicescService.GetById(id);
 
-            if (carSpeedStatistic == null)
+            if (device == null)
             {
                 return NotFound();
             }
 
-            return Ok(carSpeedStatistic);
+            return Ok(device);
         }
     }
 }

@@ -75,20 +75,24 @@ namespace Devices.Services
         //    return result;
         //}
 
-        //public Device UpdateCarSpeedStatistic(Device carSpeedStatistic, int id)
-        //{
-        //    var carSpeedStatisticToUpdate = _context.Devices.SingleOrDefault(h => h.Id == id);
+        public Device UpdateDevice(Device device, int id)
+        {
+            var deviceToUpdate = _context.Devices.SingleOrDefault(h => h.Id == id);
 
-        //    if (carSpeedStatisticToUpdate != null)
-        //    {
-        //        carSpeedStatisticToUpdate.CarSpeedDate = carSpeedStatistic.CarSpeedDate;
-        //        carSpeedStatisticToUpdate.CarSpeed = carSpeedStatistic.CarSpeed;
-        //        carSpeedStatisticToUpdate.CarRegistrationNumber = carSpeedStatistic.CarRegistrationNumber;
-        //        _context.Entry(carSpeedStatisticToUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        //        _context.SaveChanges();
-        //    }
+            if (deviceToUpdate != null)
+            {
+                deviceToUpdate.Name = device.Name;
+                deviceToUpdate.Model = device.Model;
+                deviceToUpdate.MessagesRecieved = device.MessagesRecieved;
+                deviceToUpdate.MessagesMaximum = device.MessagesMaximum;
+                deviceToUpdate.ConnectionStart = device.ConnectionStart;
+                deviceToUpdate.IsOnline = device.IsOnline;
 
-        //    return carSpeedStatisticToUpdate;
-        //}
+                _context.Entry(deviceToUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            return deviceToUpdate;
+        }
     }
 }

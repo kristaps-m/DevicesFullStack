@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Agent from "@/api/Agent";
-import OneDevice from "@/app/Models/OneDevice";
+import IOneDevice from "@/app/Models/OneDevice";
 import AppPagination, { paginate } from "@/Components/AppPagination";
 
 interface DataRoot {
-  devices: OneDevice[];
+  devices: IOneDevice[];
 }
 
 function calculateDaysDifference(givenDate: string) {
@@ -28,7 +28,7 @@ function calculateDaysDifference(givenDate: string) {
 }
 
 export default function Devices2() {
-  const [devicesList, setDevicesList] = useState<OneDevice[]>([]);
+  const [devicesList, setDevicesList] = useState<IOneDevice[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -46,7 +46,7 @@ export default function Devices2() {
   }, []);
 
   const theDivicesLength = devicesList.length;
-  const paginatedPosts: OneDevice[] = paginate(
+  const paginatedPosts: IOneDevice[] = paginate(
     devicesList,
     currentPage,
     pageSize

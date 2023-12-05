@@ -6,6 +6,6 @@ namespace Devices.Core.Interfaces
     {
         //CarAverageSpeedResultsInDay CalculateAverageSpeedByHourInDay(DateTime searchData);
         //List<Device> FilterBySpeedDatefromDateuntil(int? speed, DateTime? dateFrom, DateTime? dateUntil);
-        //Device UpdateCarSpeedStatistic(Device carSpeedStatistic, int id);
+        Device UpdateDevice(Device device, int id);
     }
 }

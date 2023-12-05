@@ -1,4 +1,4 @@
-import OneDevice from "@/app/Models/OneDevice";
+import IOneDevice from "@/app/Models/OneDevice";
 import React from "react";
 
 interface PaginationProps {
@@ -76,7 +76,7 @@ const AppPagination = ({
 export default AppPagination;
 
 export const paginate = (
-  items: OneDevice[],
+  items: IOneDevice[],
   pageNumber: number,
   pageSize: number
 ) => {

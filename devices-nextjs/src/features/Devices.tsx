@@ -5,13 +5,13 @@ import { IconSearch } from "../Components/IconSearch";
 import { Label } from "../Components/Label";
 import { PageComponents } from "../Components/PageComponents";
 import { PageComponentsWrapper } from "../Components/PageComponentsWrapper";
-import OneDevice from "@/app/Models/OneDevice";
+import IOneDevice from "@/app/Models/OneDevice";
 import AppPagination, { paginate } from "@/Components/AppPagination";
 import Agent from "@/api/Agent";
 // import { Right } from "./../Components/Right";
 
 interface DataRoot {
-  devices: OneDevice[];
+  devices: IOneDevice[];
 }
 
 function calculateDaysDifference(givenDate: string) {
@@ -34,7 +34,7 @@ function calculateDaysDifference(givenDate: string) {
 }
 
 export const Devices = (): JSX.Element => {
-  const [devicesList, setDevicesList] = useState<OneDevice[]>([]);
+  const [devicesList, setDevicesList] = useState<IOneDevice[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -52,7 +52,7 @@ export const Devices = (): JSX.Element => {
   }, []);
 
   const theDivicesLength = devicesList.length;
-  const paginatedPosts: OneDevice[] = paginate(
+  const paginatedPosts: IOneDevice[] = paginate(
     devicesList,
     currentPage,
     pageSize
