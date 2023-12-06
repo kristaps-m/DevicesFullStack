@@ -4,7 +4,8 @@ export default interface IOneDevice {
   model: string;
   messagesRecieved: number;
   messagesMaximum: number;
-  connectionStart: string;
+  connectionStart: string | Date;
+  isOnline: boolean;
 }
 
 export default class OneDeviceClass {
@@ -13,5 +14,6 @@ export default class OneDeviceClass {
   model!: string;
   messagesRecieved!: number;
   messagesMaximum!: number;
-  connectionStart!: string;
+  connectionStart!: string | Date;
+  isOnline!: boolean;
 }

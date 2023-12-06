@@ -8,13 +8,14 @@ import { PageComponentsWrapper } from "../Components/PageComponentsWrapper";
 import IOneDevice from "@/app/Models/OneDevice";
 import AppPagination, { paginate } from "@/Components/AppPagination";
 import Agent from "@/api/Agent";
+import AddDeviceModal from "./AddDeviceModal";
 // import { Right } from "./../Components/Right";
 
 interface DataRoot {
   devices: IOneDevice[];
 }
 
-function calculateDaysDifference(givenDate: string) {
+function calculateDaysDifference(givenDate: string | Date) {
   // Convert the given date string to a Date object
   const givenDateTime: any = new Date(givenDate);
 
@@ -42,6 +43,33 @@ export const Devices = (): JSX.Element => {
     setCurrentPage(page);
   };
   const [theDivicesLength, setTheDivicesLength] = useState(0);
+  const [isAddDeviceModalOpen, setIsAddDeviceModalOpen] = useState(false);
+  const openAddDeviceModal = () => {
+    setIsAddDeviceModalOpen(true);
+  };
+
+  const closeAddDeviceModal = () => {
+    setIsAddDeviceModalOpen(false);
+  };
+
+  // const handleAddDeviceSubmit = () => {
+  //   // Add logic to submit the new device
+  //   // You can use the `DeviceCatalog.addDevice` method from your agent
+  //   // After successful submission, close the modal
+  //   closeAddDeviceModal();
+  // };
+  const handleAddDeviceSubmit = async (newDevice: IOneDevice) => {
+    try {
+      // Call the addDevice method from your agent to submit the new device
+      await Agent.DeviceCatalog.addDevice(newDevice);
+      // Add logic for handling success, e.g., refreshing the device list
+      // Optionally, you can close the modal here
+      closeAddDeviceModal();
+    } catch (error) {
+      // Handle errors here
+      console.error("Error adding device:", error);
+    }
+  };
 
   useEffect(() => {
     Agent.DeviceCatalog.list()
@@ -115,6 +143,12 @@ export const Devices = (): JSX.Element => {
                   />
                 </div>
               </div>
+              <button onClick={openAddDeviceModal}>Add Device</button>
+              <AddDeviceModal
+                isOpen={isAddDeviceModalOpen}
+                onRequestClose={closeAddDeviceModal}
+                onSubmit={handleAddDeviceSubmit}
+              />
               <div className="flex flex-col w-[300px] items-start gap-[10px] pl-[12px] pr-[16px] py-[9px] relative bg-x01-theme-colors02-neutral-colorn-200 rounded-[6px]">
                 <div className="items-center gap-[8px] self-stretch w-full flex-[0_0_auto] flex relative">
                   <IconSearch className="bg-[url(icon-2.svg)] !relative" />

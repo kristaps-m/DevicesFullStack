@@ -57,9 +57,9 @@ const TestErrors = {
 const DeviceCatalog = {
   // list: () => requests.get("devices"),
   list: () => requests.get("get-all"),
-  addDevice: () => requests.addDevice("add", new OneDeviceClass()),
+  addDevice: (oneDevice: IOneDevice) => requests.addDevice("add", oneDevice),
   removeDevice: (id: number) => requests.delete(`${id}`),
-  updateDevice: (id: number) => requests.put(id, new OneDeviceClass()),
+  // updateDevice: (id: number) => requests.put(id, new OneDeviceClass()),
 };
 
 const Agent = {
