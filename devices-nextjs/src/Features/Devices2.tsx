@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Agent from "@/api/Agent";
+// import Agent from "@/api/Agent";
 import IOneDevice from "@/app/Models/OneDevice";
 import AppPagination, { paginate } from "@/Components/AppPagination";
 
@@ -36,14 +36,14 @@ export default function Devices2() {
     setCurrentPage(page);
   };
 
-  useEffect(() => {
-    Agent.DeviceCatalog.list()
-      .then((devices: DataRoot) => {
-        setDevicesList(devices.devices);
-      })
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, []);
+  // useEffect(() => {
+  //   Agent.DeviceCatalog.list()
+  //     .then((devices: DataRoot) => {
+  //       setDevicesList(devices.devices);
+  //     })
+  //     .catch((error) => console.error(error))
+  //     .finally(() => setLoading(false));
+  // }, []);
 
   const theDivicesLength = devicesList.length;
   const paginatedPosts: IOneDevice[] = paginate(
@@ -230,9 +230,9 @@ gap: 20px
                         Con-stat
                       </div>
                       <div className="self-stretch text-gray-800 text-sm font-medium font-['Inter'] leading-snug">
-                        {oneDevice.messagesRecieved}/{oneDevice.messagesMaximum}{" "}
+                        {/* {oneDevice.messagesRecieved}/{oneDevice.messagesMaximum}{" "}
                         messages over{" "}
-                        {calculateDaysDifference(oneDevice.connectionStart)}{" "}
+                        {calculateDaysDifference(oneDevice.connectionStart)}{" "} */}
                         days
                       </div>
                     </div>

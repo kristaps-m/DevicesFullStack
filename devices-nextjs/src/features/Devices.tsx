@@ -7,7 +7,7 @@ import { PageComponents } from "../Components/PageComponents";
 import { PageComponentsWrapper } from "../Components/PageComponentsWrapper";
 import IOneDevice from "@/app/Models/OneDevice";
 import AppPagination, { paginate } from "@/Components/AppPagination";
-import Agent from "@/api/Agent";
+import Agent from "@/api/agent";
 import AddDeviceModal from "./AddDeviceModal";
 // import { Right } from "./../Components/Right";
 
@@ -44,11 +44,14 @@ export const Devices = (): JSX.Element => {
   };
   const [theDivicesLength, setTheDivicesLength] = useState(0);
   const [isAddDeviceModalOpen, setIsAddDeviceModalOpen] = useState(false);
-  const openAddDeviceModal = () => {
+  const [selectedDevice, setSelectedDevice] = useState<IOneDevice | null>(null);
+  const openAddDeviceModal = (device: IOneDevice | null = null) => {
+    setSelectedDevice(device);
     setIsAddDeviceModalOpen(true);
   };
 
   const closeAddDeviceModal = () => {
+    setSelectedDevice(null);
     setIsAddDeviceModalOpen(false);
   };
 
@@ -58,16 +61,60 @@ export const Devices = (): JSX.Element => {
   //   // After successful submission, close the modal
   //   closeAddDeviceModal();
   // };
-  const handleAddDeviceSubmit = async (newDevice: IOneDevice) => {
+  const handleAddDeviceSubmit = async (updatedDevice: IOneDevice) => {
     try {
+      if (selectedDevice) {
+        // If a device is selected, it means we are updating
+        // Call the updateDevice method from your agent
+        updatedDevice.id = selectedDevice.id;
+        // updatedDevice.model = selectedDevice.model;
+        // updatedDevice.messagesMaximum = selectedDevice.messagesMaximum;
+        await Agent.DeviceCatalog.updateDevice(
+          // selectedDevice.id,
+          updatedDevice
+        );
+      } else {
+        // If no device is selected, it means we are adding
+        // Call the addDevice method from your agent
+        updatedDevice.id = 0;
+        await Agent.DeviceCatalog.addDevice(updatedDevice);
+      }
+      // After updating or adding a device, refresh the list
+      fetchDevices();
       // Call the addDevice method from your agent to submit the new device
-      await Agent.DeviceCatalog.addDevice(newDevice);
+      //await Agent.DeviceCatalog.addDevice(newDevice);
       // Add logic for handling success, e.g., refreshing the device list
       // Optionally, you can close the modal here
       closeAddDeviceModal();
     } catch (error) {
       // Handle errors here
       console.error("Error adding device:", error);
+    }
+  };
+
+  const handleDeviceDelete = async () => {
+    if (selectedDevice) {
+      try {
+        // Call the removeDevice method from your agent
+        await Agent.DeviceCatalog.removeDevice(selectedDevice.id);
+        // After deleting a device, refresh the list
+        fetchDevices();
+        // Close the modal
+        closeAddDeviceModal();
+      } catch (error) {
+        // Handle errors here
+        console.error("Error deleting device:", error);
+      }
+    }
+  };
+
+  const fetchDevices = async () => {
+    try {
+      // Fetch the list of devices
+      const deviceList = await Agent.DeviceCatalog.list();
+      setDevicesList(deviceList);
+    } catch (error) {
+      console.error("Error fetching devices:", error);
     }
   };
 
@@ -143,11 +190,13 @@ export const Devices = (): JSX.Element => {
                   />
                 </div>
               </div>
-              <button onClick={openAddDeviceModal}>Add Device</button>
+              <button onClick={() => openAddDeviceModal()}>Add Device</button>
               <AddDeviceModal
                 isOpen={isAddDeviceModalOpen}
                 onRequestClose={closeAddDeviceModal}
                 onSubmit={handleAddDeviceSubmit}
+                onDelete={handleDeviceDelete}
+                device={selectedDevice}
               />
               <div className="flex flex-col w-[300px] items-start gap-[10px] pl-[12px] pr-[16px] py-[9px] relative bg-x01-theme-colors02-neutral-colorn-200 rounded-[6px]">
                 <div className="items-center gap-[8px] self-stretch w-full flex-[0_0_auto] flex relative">
@@ -212,6 +261,9 @@ export const Devices = (): JSX.Element => {
                       text="Settings"
                       valueClassName="!text-x01-theme-colors02-neutral-colorn-800"
                     />
+                    <button onClick={() => openAddDeviceModal(oneDevice)}>
+                      Edit
+                    </button>
                     <ButtonDefault
                       className="!h-[36px] !gap-[8px] !flex-[0_0_auto] !bg-x01-theme-colors02-neutral-colorn-200"
                       text="Control"

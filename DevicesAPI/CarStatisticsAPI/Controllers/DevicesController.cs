@@ -24,11 +24,11 @@ namespace DevicesAPI.Controllers
             return Ok(device);
         }
 
-        [Route("{id}")]
+        [Route("update")]
         [HttpPut]
-        public IActionResult UpdateDevice(int id, Device newDevice)
+        public IActionResult UpdateDevice(Device newDevice) // int id,
         {
-            var carSpeedStatisticToUpdate = _devicescService.UpdateDevice(newDevice, id);
+            var carSpeedStatisticToUpdate = _devicescService.UpdateDevice(newDevice, newDevice.Id);
 
             if (carSpeedStatisticToUpdate == null)
             {
@@ -40,7 +40,7 @@ namespace DevicesAPI.Controllers
 
         [Route("{id}")]
         [HttpDelete]
-        public IActionResult DeleteCarSpeedStatistic(int id)
+        public IActionResult DeleteDevice(int id)
         {
             var objectToDelete = _devicescService.GetById(id);
             _devicescService.Delete(objectToDelete);
@@ -50,7 +50,7 @@ namespace DevicesAPI.Controllers
 
         [Route("get-all")]
         [HttpGet]
-        public IActionResult GetAllCarSpeedStatistic()
+        public IActionResult GetAllDevices()
         {
             var allCarSpeedStatistic = _devicescService.GetAll();
 

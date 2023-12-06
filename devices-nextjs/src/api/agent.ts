@@ -44,7 +44,8 @@ const requests = {
   addDevice: (url: string, device: IOneDevice) =>
     axios.post(url, device).then(responseBody),
   delete: (url: string) => axios.delete(url).then(responseBody),
-  put: (url: string) => axios.delete(url).then(responseBody),
+  put: (url: string, device: IOneDevice) =>
+    axios.put(url, device).then(responseBody),
 };
 
 const TestErrors = {
@@ -59,7 +60,7 @@ const DeviceCatalog = {
   list: () => requests.get("get-all"),
   addDevice: (oneDevice: IOneDevice) => requests.addDevice("add", oneDevice),
   removeDevice: (id: number) => requests.delete(`${id}`),
-  // updateDevice: (id: number) => requests.put(id, new OneDeviceClass()),
+  updateDevice: (oneDevice: IOneDevice) => requests.put("update", oneDevice),
 };
 
 const Agent = {
