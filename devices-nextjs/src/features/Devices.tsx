@@ -41,17 +41,19 @@ export const Devices = (): JSX.Element => {
   const onPageChange = (page: number) => {
     setCurrentPage(page);
   };
+  const [theDivicesLength, setTheDivicesLength] = useState(0);
 
   useEffect(() => {
     Agent.DeviceCatalog.list()
-      .then((devices: DataRoot) => {
-        setDevicesList(devices.devices);
+      .then((data: IOneDevice[]) => {
+        setDevicesList(data), setTheDivicesLength(data.length);
       })
       .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
-  const theDivicesLength = devicesList.length;
   const paginatedPosts: IOneDevice[] = paginate(
     devicesList,
     currentPage,
