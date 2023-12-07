@@ -15,7 +15,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<DevicesDbContext>(x => x.UseSqlite(connectionString));
 
 builder.Services.AddScoped<IDevicesDbContext, DevicesDbContext>();
-builder.Services.AddScoped<IDbService, DbService>();
+builder.Services.AddScoped<IDbService, IDbService>();
 builder.Services.AddScoped<IDevicesService, DevicesService>();
 
 var app = builder.Build();
