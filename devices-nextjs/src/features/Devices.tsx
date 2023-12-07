@@ -223,7 +223,7 @@ export const Devices = (): JSX.Element => {
                       <div className="relative w-[6px] h-[6px] bg-x02-semantic-colors01-dangerdanger-300 rounded-[3px]" />
                       <div className="flex-col items-start flex-1 grow flex relative">
                         <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] tracking-[-0.20px] leading-[22px]">
-                          Side Entry Intercom
+                          [{oneDevice.id}] Side Entry Intercom
                         </div>
                         <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] font-normal text-x01-theme-colors02-neutral-colorn-700 text-[12px] tracking-[-0.20px] leading-[16px]">
                           <span className="font-paragraph-extra-small font-[number:var(--paragraph-extra-small-font-weight)] text-[#5c5f70] text-[length:var(--paragraph-extra-small-font-size)] tracking-[var(--paragraph-extra-small-letter-spacing)] leading-[var(--paragraph-extra-small-line-height)] [font-style:var(--paragraph-extra-small-font-style)]">

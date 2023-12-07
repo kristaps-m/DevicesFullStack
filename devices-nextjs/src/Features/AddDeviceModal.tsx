@@ -2,6 +2,8 @@ import IOneDevice from "@/app/Models/OneDevice";
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 
+// Modal.setAppElement("#your-root-element-id");
+
 interface AddDeviceModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -58,7 +60,18 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
     }
   );
   useEffect(() => {
-    //setDevice(initialDevice);
+    console.log("useEffect(()) ... initialDevice:", initialDevice);
+    setNewDevice(
+      initialDevice || {
+        id: 0,
+        name: "",
+        model: "",
+        messagesRecieved: 0,
+        messagesMaximum: 0,
+        connectionStart: new Date(),
+        isOnline: false,
+      }
+    );
   }, [initialDevice]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,8 +126,9 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
     }
   };
 
-  // console.log(newDevice);
-  console.log(initialDevice);
+  console.log("newDevice", newDevice);
+  console.log("initialDevice", initialDevice);
+  console.log("device=", device);
 
   return (
     <Modal
@@ -188,9 +202,11 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
         {/* <button type="button" onClick={handleSubmit}>
           Submit
         </button> */}
+        <br />
         <button type="button" onClick={handleSubmit}>
           {initialDevice?.id ? "Update" : "Add"}
         </button>
+        <br />
         {initialDevice?.id && (
           <button type="button" onClick={handleDelete}>
             Delete
