@@ -39,6 +39,8 @@ const config: Config = {
           "var(--x01-theme-colors01-primary-colorp-soft)",
         "x02-semantic-colors01-dangerdanger-300":
           "var(--x02-semantic-colors01-dangerdanger-300)",
+        "x02-semantic-colors01-online-300":
+          "var(--x02-semantic-colors01-online-300)",
       },
     },
   },

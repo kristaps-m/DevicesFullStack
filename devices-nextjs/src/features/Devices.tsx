@@ -38,6 +38,9 @@ export const Devices = (): JSX.Element => {
   const [devicesList, setDevicesList] = useState<IOneDevice[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [userSearchValue, setUserSearchValue] = useState("");
+  const [searchDevicesByOnlineStatus, setOnlineStatus] = useState(true);
+  const [cliked, setClicked] = useState(false);
   const pageSize = 10;
   const onPageChange = (page: number) => {
     setCurrentPage(page);
@@ -93,9 +96,11 @@ export const Devices = (): JSX.Element => {
       console.error("Error fetching devices:", error);
     }
   };
-
   useEffect(() => {
-    Agent.DeviceCatalog.list()
+    Agent.DeviceCatalog.getObjectsFiltered(
+      userSearchValue,
+      searchDevicesByOnlineStatus
+    )
       .then((data: IOneDevice[]) => {
         setDevicesList(data), setTheDivicesLength(data.length);
       })
@@ -103,14 +108,14 @@ export const Devices = (): JSX.Element => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [userSearchValue, searchDevicesByOnlineStatus]);
 
   const paginatedPosts: IOneDevice[] = paginate(
     devicesList,
     currentPage,
     pageSize
   );
-
+  console.log(searchDevicesByOnlineStatus);
   return (
     <div className="flex flex-col h-[900px] items-start relative bg-x01-theme-colors02-neutral-colorn-300">
       <div className="inline-flex gap-[20px] pt-0 pb-[20px] px-0 bg-x01-theme-colors02-neutral-colorn-800 flex-col items-center relative flex-[0_0_auto]">
@@ -143,10 +148,20 @@ export const Devices = (): JSX.Element => {
           <div className="flex items-center justify-around gap-[12px] px-0 py-[20px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center justify-between px-[20px] py-0 relative flex-1 grow">
               <div className="inline-flex items-start gap-[4px] relative flex-[0_0_auto]">
-                <div className="gap-[10px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors02-neutral-colorn-100 border border-solid border-x01-theme-colors02-neutral-colorn-400 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]">
-                  <div className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap">
+                <div
+                  className={`gap-[10px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors02-neutral-colorn-100 border border-solid border-x01-theme-colors02-neutral-colorn-400 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]`}
+                >
+                  {/* <div className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap">
                     Online
-                  </div>
+                  </div> */}
+                  <button
+                    className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap"
+                    onClick={() => {
+                      setOnlineStatus(true), setClicked(true);
+                    }}
+                  >
+                    Online
+                  </button>
                   <Label
                     className="!flex-[0_0_auto]"
                     clearOption={false}
@@ -155,9 +170,15 @@ export const Devices = (): JSX.Element => {
                   />
                 </div>
                 <div className="gap-[8px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors01-primary-colorp-300 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]">
-                  <div className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap">
+                  {/* <div className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap">
                     Offline
-                  </div>
+                  </div> */}
+                  <button
+                    className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap"
+                    onClick={() => setOnlineStatus(false)}
+                  >
+                    Offline
+                  </button>
                   <Label
                     className="!flex-[0_0_auto] !bg-x01-theme-colors01-primary-colorp-100"
                     clearOption={false}
@@ -165,6 +186,7 @@ export const Devices = (): JSX.Element => {
                     text="3"
                   />
                 </div>
+                <h1>Status{`${searchDevicesByOnlineStatus}`}</h1>
               </div>
               <button
                 type="button"
@@ -183,9 +205,19 @@ export const Devices = (): JSX.Element => {
               <div className="flex flex-col w-[300px] items-start gap-[10px] pl-[12px] pr-[16px] py-[9px] relative bg-x01-theme-colors02-neutral-colorn-200 rounded-[6px]">
                 <div className="items-center gap-[8px] self-stretch w-full flex-[0_0_auto] flex relative">
                   <IconSearch className="bg-[url(icon-2.svg)] !relative" />
-                  <div className="relative flex-1 [font-family:'Inter-Regular',Helvetica] font-normal text-x01-theme-colors02-neutral-colorn-700 text-[14px] tracking-[-0.20px] leading-[18px]">
+                  {/* <div className="relative flex-1 [font-family:'Inter-Regular',Helvetica] font-normal text-x01-theme-colors02-neutral-colorn-700 text-[14px] tracking-[-0.20px] leading-[18px]">
                     Quick search..
-                  </div>
+                  </div> */}
+                  <input
+                    type="text"
+                    value={userSearchValue}
+                    placeholder="Quick search.."
+                    onChange={(e) => {
+                      setUserSearchValue(e.target.value);
+                      // props.onResetCurrentPageClick(1); // Reset currentPage to 1 when searching
+                    }}
+                    className="relative flex-1 [font-family:'Inter-Regular',Helvetica] font-normal text-x01-theme-colors02-neutral-colorn-700 text-[14px] tracking-[-0.20px] leading-[18px]"
+                  />
                 </div>
               </div>
             </div>
@@ -202,7 +234,13 @@ export const Devices = (): JSX.Element => {
                 >
                   <div className="flex items-center gap-[16px] relative flex-1 grow">
                     <div className="max-w-[250px] items-center gap-[12px] flex relative flex-1 grow">
-                      <div className="relative w-[6px] h-[6px] bg-x02-semantic-colors01-dangerdanger-300 rounded-[3px]" />
+                      <div
+                        className={`relative w-[8px] h-[8px] bg-x02-semantic-colors01-${
+                          searchDevicesByOnlineStatus
+                            ? "online"
+                            : "dangerdanger"
+                        }-300 rounded-[3px]`}
+                      />
                       <div className="flex-col items-start flex-1 grow flex relative">
                         <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] tracking-[-0.20px] leading-[22px]">
                           [{oneDevice.id}] Side Entry Intercom
@@ -282,3 +320,11 @@ export const Devices = (): JSX.Element => {
     </div>
   );
 };
+
+function isOnlineBtnPressed(params: boolean) {
+  if (params) {
+    return "gap-[8px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors01-primary-colorp-300 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]";
+  } else {
+    return "gap-[10px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors02-neutral-colorn-100 border border-solid border-x01-theme-colors02-neutral-colorn-400 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]";
+  }
+}

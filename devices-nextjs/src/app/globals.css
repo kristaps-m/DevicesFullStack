@@ -22,9 +22,9 @@
   --paragraph-extra-small-letter-spacing: -0.20000000298023224px;
   --paragraph-extra-small-line-height: 16px;
   --x01-theme-colors01-primary-colorp-100: rgba(214, 239, 255, 1);
-  --x01-theme-colors01-primary-colorp-300: rgba(52, 152, 219, 1);
+  --x01-theme-colors01-primary-colorp-300: rgba(52, 152, 219, 1); /*Pressed online offline button*/
   --x01-theme-colors01-primary-colorp-500: rgba(19, 73, 108, 1);
-  --x01-theme-colors02-neutral-colorn-100: rgba(255, 255, 255, 1);
+  --x01-theme-colors02-neutral-colorn-100: rgba(255, 255, 255, 1); /*Not active online button*/
   --x01-theme-colors02-neutral-colorn-200: rgba(240, 241, 244, 1);
   --x01-theme-colors02-neutral-colorn-300: rgba(226, 227, 233, 1);
   --x01-theme-colors02-neutral-colorn-400: rgba(214, 216, 224, 1);
@@ -33,6 +33,7 @@
   --x01-theme-colors02-neutral-colorn-800: rgba(24, 30, 52, 1);
   --x01-theme-colors01-primary-colorp-soft: rgb(49, 70, 145);
   --x02-semantic-colors01-dangerdanger-300: rgba(184, 20, 61, 1);
+  --x02-semantic-colors01-online-300: rgb(58, 184, 20);
 }
 
 

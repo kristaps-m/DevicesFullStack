@@ -11,6 +11,25 @@ namespace Devices.Services
             
         }
 
+        // https://localhost:5000/api/devices/get-all-filtered?searchValue=666
+        public List<Device> Test(string? searchValue, bool isOnline)
+        {
+            IQueryable<Device> resultQuery = _context.Devices.Where(d => d.IsOnline == isOnline);
+            if (searchValue != null)
+            {
+                resultQuery = _context.Devices
+                    .Where(d =>
+                        d.Name.Contains(searchValue) ||
+                        d.Model.Contains(searchValue) ||
+                        (IsDateTime(searchValue) ? d.ConnectionStart == Convert.ToDateTime(searchValue) : d.ConnectionStart.ToString().Contains(searchValue)) ||
+                        d.MessagesRecieved.ToString().Contains(searchValue) ||
+                        d.MessagesMaximum.ToString().Contains(searchValue)                                           
+                    );
+            }
+
+            return resultQuery.ToList();
+        }
+
         public List<Device> FilterBySpeedDatefromDateuntil(int? speed, DateTime? dateFrom, DateTime? dateUntil)
         {
             IQueryable<Device> resultQuery = _context.Devices;
@@ -38,43 +57,6 @@ namespace Devices.Services
             return resultQuery.ToList();
         }
 
-        //public CarAverageSpeedResultsInDay CalculateAverageSpeedByHourInDay(DateTime dayToGetAvgSpeedResults)
-        //{
-        //    var result = new CarAverageSpeedResultsInDay
-        //    {
-        //        DateAvgSpeedIsSearched = dayToGetAvgSpeedResults,
-        //        ResultEachHour = new List<SpeedResultEachHour>()
-        //    };
-
-        //    var hourlySpeeds = _context.Devices
-        //        .Where(carSpeedStat => carSpeedStat.CarSpeedDate.Date == dayToGetAvgSpeedResults.Date)
-        //        .GroupBy(carSpeedStat => carSpeedStat.CarSpeedDate.Hour)
-        //        .Select(group => new
-        //        {
-        //            Hour = group.Key,
-        //            AvgSpeed = Math.Round(group.Average(stat => stat.CarSpeed), 2)
-        //        })
-        //        .ToList();
-
-        //    if (hourlySpeeds.Count == 0)
-        //    {
-        //        // For each hour of day from 0:00 to 23:00
-        //        for (int i = 0; i <= 23; i++)
-        //        {
-        //            result.ResultEachHour.Add(new SpeedResultEachHour(i, 0));
-        //        }
-        //    }
-        //    else
-        //    {
-        //        foreach (var hourlySpeed in hourlySpeeds)
-        //        {
-        //            result.ResultEachHour.Add(new SpeedResultEachHour(hourlySpeed.Hour, hourlySpeed.AvgSpeed));
-        //        }
-        //    }
-
-        //    return result;
-        //}
-
         public Device UpdateDevice(Device device, int id)
         {
             var deviceToUpdate = _context.Devices.SingleOrDefault(h => h.Id == id);
@@ -93,6 +75,12 @@ namespace Devices.Services
             }
 
             return deviceToUpdate;
+        }
+
+        private bool IsDateTime(string date)
+        {
+            if (string.IsNullOrEmpty(date)) return false;
+            return DateTime.TryParse(date, out DateTime dateTime);
         }
     }
 }

@@ -56,6 +56,15 @@ namespace DevicesAPI.Controllers
 
             return Ok(allCarSpeedStatistic);
         }
+
+        [Route("get-all-filtered")]
+        [HttpGet]
+        public IActionResult GetAllDevicesFiltered(string? searchValue, bool isOnline)
+        {
+            var allCarSpeedStatistic = _devicescService.Test(searchValue, isOnline);
+
+            return Ok(allCarSpeedStatistic);
+        }
         // https://localhost:5000/api/car-speed-statistics/get-filtered?speed=100&dateFrom=2020-08-20&dateUntil=2020-08-21
         // https://localhost:5000/api/car-speed-statistics/get-filtered?speed=105&dateFrom=&dateUntil=
         //[Route("get-filtered")]

@@ -61,6 +61,10 @@ const DeviceCatalog = {
   addDevice: (oneDevice: IOneDevice) => requests.addDevice("add", oneDevice),
   removeDevice: (id: number) => requests.delete(`${id}`),
   updateDevice: (oneDevice: IOneDevice) => requests.put("update", oneDevice),
+  getObjectsFiltered: (searchValue: string, isOnline: boolean) =>
+    requests.get(
+      `get-all-filtered?searchValue=${searchValue}&isOnline=${isOnline}`
+    ),
 };
 
 const Agent = {
