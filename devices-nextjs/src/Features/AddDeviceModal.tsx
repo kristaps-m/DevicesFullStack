@@ -7,9 +7,9 @@ import Modal from "react-modal";
 interface AddDeviceModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  onSubmit: (device: IOneDevice) => void; // Add a callback for submitting the form
-  onDelete?: () => void; // Optional delete callback
-  device?: IOneDevice | null; // Optional initial device for update
+  onSubmit: (device: IOneDevice) => void;
+  onDelete?: () => void;
+  device?: IOneDevice | null;
 }
 
 const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
@@ -27,7 +27,6 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
     isOnline: false,
   },
 }) => {
-  // Add your form logic here
   const [newDevice, setNewDevice] = useState<IOneDevice>(
     initialDevice || {
       id: 0,
@@ -39,15 +38,7 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
       isOnline: false,
     }
   );
-  // const [newDevice, setNewDevice] = useState<IOneDevice>({
-  //   id: 0,
-  //   name: "",
-  //   model: "",
-  //   messagesRecieved: 0,
-  //   messagesMaximum: 0,
-  //   connectionStart: new Date(),
-  //   isOnline: false,
-  // });
+
   const [device, setDevice] = useState<IOneDevice>(
     initialDevice || {
       id: 0,
@@ -101,43 +92,51 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
     // Validate the form fields here
     if (!newDevice.name || !newDevice.model) {
       // If name or model is empty, display an error message or handle it as needed
+      alert("Name and Model are required.");
       console.error("Name and Model are required.");
       return;
     }
 
     if (newDevice.messagesRecieved < 0 || newDevice.messagesMaximum < 0) {
       // If messagesRecieved or messagesMaximum are negative, display an error message or handle it as needed
+      alert("Messages Received and Messages Maximum must be non-negative.");
       console.error(
         "Messages Received and Messages Maximum must be non-negative."
       );
       return;
     }
-
-    // Optionally, you can add more specific validation based on your requirements
-
-    // If the form fields are valid, call the submit callback with the new device data
     onSubmit(newDevice);
   };
 
   const handleDelete = () => {
-    // Optionally, you can add a confirmation dialog before deleting
     if (window.confirm("Are you sure you want to delete this device?")) {
-      onDelete?.(); // Call the delete callback if provided
+      onDelete?.();
     }
   };
 
-  console.log("newDevice", newDevice);
-  console.log("initialDevice", initialDevice);
-  console.log("device=", device);
+  const customStyles = {
+    content: {
+      width: "80%", // Set your custom width here
+      height: "66%", // Set your custom height here
+      margin: "auto", // Center the modal horizontally
+      top: "50%", // Center the modal vertically
+      transform: "translateY(-50%)", // Adjust vertical centering
+    },
+  };
 
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      // Add modal styles and other configurations as needed
+      className="bg-x01-theme-colors01-primary-colorp-500 w-4/5"
+      style={{ content: { margin: "auto", transform: "translateX(0%)" } }}
     >
-      <h2>{initialDevice?.id ? "Update Device" : "Add New Device"}</h2>
-      <form>
+      <h2 className="bg-x01-theme-colors01-primary-colorp-soft text-5xl">
+        {initialDevice?.id
+          ? `Update Device [${newDevice.id}]`
+          : "Add New Device"}
+      </h2>
+      <form className="bg-x01-theme-colors01-primary-colorp-300 text-3xl">
         <label>
           Name:
           <input
@@ -179,48 +178,61 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
         </label>
         <br />
         <label>
-          Connection Start:
+          Connection Start: {newDevice.connectionStart.toString().split("T")[0]}
+          {"  "}
           <input
             type="date" // datetime-local
             name="connectionStart"
-            value={newDevice.connectionStart.toString()} // .toISOString().slice(0, 16)
+            value={new Date(newDevice.connectionStart).toISOString()}
             // onChange={(e) => handleDateChange(new Date(e.target.value))}
             onChange={(e) => handleDateChange(e.target.value)}
           />
         </label>
         <br />
-        <label>
-          Is Online:
+        <label className={newDevice.isOnline ? "bg-green-200" : "bg-red-300"}>
+          {newDevice.isOnline ? "Online: " : "Offline: "}
           <input
             type="checkbox"
             name="isOnline"
             checked={newDevice.isOnline}
             onChange={handleCheckboxChange}
+            className="w-8 h-8 border-2 border-blue-500 rounded-sm bg-white"
           />
+          {/* <p>{newDevice.isOnline ? "Online" : "Offline"}</p> */}
         </label>
         <br />
-        {/* <button type="button" onClick={handleSubmit}>
-          Submit
-        </button> */}
         <br />
-        <button type="button" onClick={handleSubmit}>
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+        >
           {initialDevice?.id ? "Update" : "Add"}
         </button>
         <br />
+      </form>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div className="grid grid-rows-1 grid-flow-col gap-4">
+        <button
+          onClick={onRequestClose}
+          className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-5xl"
+        >
+          Close?
+        </button>{" "}
         {initialDevice?.id && (
-          <button type="button" onClick={handleDelete}>
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+          >
             Delete
           </button>
         )}
-      </form>
-      {/* <button onClick={onSubmit(newDevice)}>Submit</button> */}
-      {/* Add your form fields and submit button */}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <button onClick={onRequestClose}>Close?</button>
+      </div>
     </Modal>
   );
 };

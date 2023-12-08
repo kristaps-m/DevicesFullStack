@@ -55,39 +55,18 @@ export const Devices = (): JSX.Element => {
     setIsAddDeviceModalOpen(false);
   };
 
-  // const handleAddDeviceSubmit = () => {
-  //   // Add logic to submit the new device
-  //   // You can use the `DeviceCatalog.addDevice` method from your agent
-  //   // After successful submission, close the modal
-  //   closeAddDeviceModal();
-  // };
   const handleAddDeviceSubmit = async (updatedDevice: IOneDevice) => {
     try {
       if (selectedDevice) {
-        // If a device is selected, it means we are updating
-        // Call the updateDevice method from your agent
-        updatedDevice.id = selectedDevice.id;
-        // updatedDevice.model = selectedDevice.model;
-        // updatedDevice.messagesMaximum = selectedDevice.messagesMaximum;
-        await Agent.DeviceCatalog.updateDevice(
-          // selectedDevice.id,
-          updatedDevice
-        );
+        await Agent.DeviceCatalog.updateDevice(updatedDevice);
       } else {
         // If no device is selected, it means we are adding
-        // Call the addDevice method from your agent
-        updatedDevice.id = 0;
         await Agent.DeviceCatalog.addDevice(updatedDevice);
       }
       // After updating or adding a device, refresh the list
       fetchDevices();
-      // Call the addDevice method from your agent to submit the new device
-      //await Agent.DeviceCatalog.addDevice(newDevice);
-      // Add logic for handling success, e.g., refreshing the device list
-      // Optionally, you can close the modal here
       closeAddDeviceModal();
     } catch (error) {
-      // Handle errors here
       console.error("Error adding device:", error);
     }
   };
@@ -99,10 +78,8 @@ export const Devices = (): JSX.Element => {
         await Agent.DeviceCatalog.removeDevice(selectedDevice.id);
         // After deleting a device, refresh the list
         fetchDevices();
-        // Close the modal
         closeAddDeviceModal();
       } catch (error) {
-        // Handle errors here
         console.error("Error deleting device:", error);
       }
     }
@@ -110,7 +87,6 @@ export const Devices = (): JSX.Element => {
 
   const fetchDevices = async () => {
     try {
-      // Fetch the list of devices
       const deviceList = await Agent.DeviceCatalog.list();
       setDevicesList(deviceList);
     } catch (error) {
@@ -190,7 +166,13 @@ export const Devices = (): JSX.Element => {
                   />
                 </div>
               </div>
-              <button onClick={() => openAddDeviceModal()}>Add Device</button>
+              <button
+                type="button"
+                onClick={() => openAddDeviceModal()}
+                className="!h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200 hover:bg-green-700"
+              >
+                Add Device
+              </button>
               <AddDeviceModal
                 isOpen={isAddDeviceModalOpen}
                 onRequestClose={closeAddDeviceModal}
@@ -261,7 +243,10 @@ export const Devices = (): JSX.Element => {
                       text="Settings"
                       valueClassName="!text-x01-theme-colors02-neutral-colorn-800"
                     />
-                    <button onClick={() => openAddDeviceModal(oneDevice)}>
+                    <button
+                      onClick={() => openAddDeviceModal(oneDevice)}
+                      className="!h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200 hover:bg-orange-700"
+                    >
                       Edit
                     </button>
                     <ButtonDefault

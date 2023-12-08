@@ -35,6 +35,8 @@ const config: Config = {
           "var(--x01-theme-colors02-neutral-colorn-700)",
         "x01-theme-colors02-neutral-colorn-800":
           "var(--x01-theme-colors02-neutral-colorn-800)",
+        "x01-theme-colors01-primary-colorp-soft":
+          "var(--x01-theme-colors01-primary-colorp-soft)",
         "x02-semantic-colors01-dangerdanger-300":
           "var(--x02-semantic-colors01-dangerdanger-300)",
       },
