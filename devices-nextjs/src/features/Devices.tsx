@@ -90,12 +90,16 @@ export const Devices = (): JSX.Element => {
 
   const fetchDevices = async () => {
     try {
-      const deviceList = await Agent.DeviceCatalog.list();
+      const deviceList = await Agent.DeviceCatalog.getObjectsFiltered(
+        userSearchValue,
+        searchDevicesByOnlineStatus
+      );
       setDevicesList(deviceList);
     } catch (error) {
       console.error("Error fetching devices:", error);
     }
   };
+
   useEffect(() => {
     Agent.DeviceCatalog.getObjectsFiltered(
       userSearchValue,
@@ -126,24 +130,6 @@ export const Devices = (): JSX.Element => {
           logotypeShape="shape-4.svg"
           valueClassName="!text-x01-theme-colors02-neutral-colorn-100"
         />
-        {/*  */}
-        <div
-          className={`relative w-[8px] h-[8px] bg-x02-semantic-colors01-${
-            searchDevicesByOnlineStatus ? "online" : "dangerdanger"
-          }-300 rounded-[3px] text-2xl`}
-        >
-          BE COLORED{" "}
-          <h1
-            className={`${
-              searchDevicesByOnlineStatus
-                ? "text-green-600 text-2xl"
-                : "text-red-600 text-4xl"
-            }`}
-          >
-            {`${searchDevicesByOnlineStatus}`} ???!!!
-          </h1>
-        </div>
-        {/*  */}
         <div className="max-w-[1170px] w-[1170px] items-center gap-[12px] flex-[0_0_auto] flex relative">
           <div className="flex-col items-start gap-[12px] flex-1 grow flex relative">
             <div className="inline-flex items-start gap-[8px] relative flex-[0_0_auto]">
@@ -155,8 +141,16 @@ export const Devices = (): JSX.Element => {
               </div>
             </div>
             <div className="relative self-stretch [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[21px] tracking-[-0.30px] leading-[28px]">
-              Devices
+              Devices{" "}
+              <button
+                type="button"
+                onClick={() => openAddDeviceModal()}
+                className="!h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-800 border border-solid border-x01-theme-colors01-primary-colorp-soft rounded-[6px] hover:bg-x01-theme-colors01-primary-colorp-soft"
+              >
+                Add+
+              </button>
             </div>
+            {/* abcd */}
           </div>
         </div>
       </div>
@@ -165,7 +159,7 @@ export const Devices = (): JSX.Element => {
         <div className="flex-col w-[1172px] items-start flex-[0_0_auto] mt-[-1.00px] mb-[-1.00px] bg-x01-theme-colors02-neutral-colorn-100 rounded-[6px] border border-solid border-[#26337326] shadow-[0px_4px_8px_1px_#0c11260d] flex relative">
           <div className="flex items-center justify-around gap-[12px] px-0 py-[20px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center justify-between px-[20px] py-0 relative flex-1 grow">
-              {/* ------------------ */}
+              {/* -------Online and Offline button section----------- */}
               <div className="inline-flex items-start gap-[4px] relative flex-[0_0_auto]">
                 <div
                   className={`gap-[10px] pl-[16px] pr-[6px] py-[6px] border inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px] ${
@@ -229,52 +223,9 @@ export const Devices = (): JSX.Element => {
                     text="3"
                   />
                 </div>
-                <h1>Status{`${searchDevicesByOnlineStatus}`}</h1>
               </div>
-
+              {/* --------- End of (online offline) button section --------- */}
               {/* ------------------ */}
-              <div className="inline-flex items-start gap-[4px] relative flex-[0_0_auto]">
-                <div
-                  className={`gap-[10px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors02-neutral-colorn-100 border border-solid border-x01-theme-colors02-neutral-colorn-400 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]`}
-                >
-                  <button
-                    className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap"
-                    onClick={() => {
-                      setSearchOnlineStatus(true), setClicked(true);
-                    }}
-                  >
-                    Online
-                  </button>
-                  <Label
-                    className="!flex-[0_0_auto] bg-x02-semantic-colors01-online-300"
-                    clearOption={false}
-                    text="2"
-                    divClassName=""
-                  />
-                </div>
-                <div className="gap-[8px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors01-primary-colorp-300 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]">
-                  <button
-                    className="relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap"
-                    onClick={() => setSearchOnlineStatus(false)}
-                  >
-                    Offline
-                  </button>
-                  <Label
-                    className="!flex-[0_0_auto] bg-x02-semantic-colors01-dangerdanger-300"
-                    clearOption={false}
-                    divClassName="!text-x01-theme-colors01-primary-colorp-500"
-                    text="3"
-                  />
-                </div>
-                <h1>Status{`${searchDevicesByOnlineStatus}`}</h1>
-              </div>
-              <button
-                type="button"
-                onClick={() => openAddDeviceModal()}
-                className="!h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200 hover:bg-green-700"
-              >
-                Add Device
-              </button>
               <AddDeviceModal
                 isOpen={isAddDeviceModalOpen}
                 onRequestClose={closeAddDeviceModal}
@@ -285,9 +236,6 @@ export const Devices = (): JSX.Element => {
               <div className="flex flex-col w-[300px] items-start gap-[10px] pl-[12px] pr-[16px] py-[9px] relative bg-x01-theme-colors02-neutral-colorn-200 rounded-[6px]">
                 <div className="items-center gap-[8px] self-stretch w-full flex-[0_0_auto] flex relative">
                   <IconSearch className="bg-[url(icon-2.svg)] !relative" />
-                  {/* <div className="relative flex-1 [font-family:'Inter-Regular',Helvetica] font-normal text-x01-theme-colors02-neutral-colorn-700 text-[14px] tracking-[-0.20px] leading-[18px]">
-                    Quick search..
-                  </div> */}
                   <input
                     type="text"
                     value={userSearchValue}
@@ -303,7 +251,7 @@ export const Devices = (): JSX.Element => {
             </div>
           </div>
           <div className="flex-col items-start gap-[4px] pt-0 pb-[20px] px-[20px] self-stretch w-full flex-[0_0_auto] flex relative">
-            {/* ----------------------------------------------------------- */}
+            {/* ---------------------- Render paginated Devices --------------------------------- */}
             {loading ? (
               <h1>LOADING</h1>
             ) : (
@@ -321,13 +269,9 @@ export const Devices = (): JSX.Element => {
                             : "dangerdanger"
                         }-300 rounded-[3px]`}
                       />
-                      {/* <p className="bg-x02-semantic-colors01-online-300">SUP</p>
-                      <p className="bg-x02-semantic-colors01-dangerdanger-300">
-                        X
-                      </p> */}
                       <div className="flex-col items-start flex-1 grow flex relative">
                         <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] tracking-[-0.20px] leading-[22px]">
-                          [{oneDevice.id}] Side Entry Intercom
+                          [{oneDevice.id}] {oneDevice.name}
                         </div>
                         <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] font-normal text-x01-theme-colors02-neutral-colorn-700 text-[12px] tracking-[-0.20px] leading-[16px]">
                           <span className="font-paragraph-extra-small font-[number:var(--paragraph-extra-small-font-weight)] text-[#5c5f70] text-[length:var(--paragraph-extra-small-font-size)] tracking-[var(--paragraph-extra-small-letter-spacing)] leading-[var(--paragraph-extra-small-line-height)] [font-style:var(--paragraph-extra-small-font-style)]">
@@ -376,9 +320,7 @@ export const Devices = (): JSX.Element => {
                       text="Control"
                       valueClassName="!text-x01-theme-colors02-neutral-colorn-800"
                     />
-                    <div className="flex w-[36px] h-[36px] items-center justify-center relative bg-x01-theme-colors02-neutral-colorn-100 rounded-[6px]">
-                      {/* <Right className="!relative !w-[16px] !h-[16px]" /> */}
-                    </div>
+                    <div className="flex w-[36px] h-[36px] items-center justify-center relative bg-x01-theme-colors02-neutral-colorn-100 rounded-[6px]"></div>
                   </div>
                 </div>
               ))
@@ -404,11 +346,3 @@ export const Devices = (): JSX.Element => {
     </div>
   );
 };
-
-function isOnlineBtnPressed(params: boolean) {
-  if (params) {
-    return "gap-[8px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors01-primary-colorp-300 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]";
-  } else {
-    return "gap-[10px] pl-[16px] pr-[6px] py-[6px] bg-x01-theme-colors02-neutral-colorn-100 border border-solid border-x01-theme-colors02-neutral-colorn-400 inline-flex items-center justify-center relative flex-[0_0_auto] rounded-[6px]";
-  }
-}

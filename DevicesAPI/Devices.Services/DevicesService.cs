@@ -13,15 +13,16 @@ namespace Devices.Services
 
         // https://localhost:5000/api/devices/get-all-filtered?searchValue=666
         public List<Device> Test(string? searchValue, bool isOnline)
-        {
+        {            
             IQueryable<Device> resultQuery = _context.Devices.Where(d => d.IsOnline == isOnline);
             if (searchValue != null)
             {
+                searchValue = searchValue.ToLower();
                 resultQuery = resultQuery
                     .Where(d =>
-                        d.Name.Contains(searchValue) ||
-                        d.Model.Contains(searchValue) ||
-                        (IsDateTime(searchValue) ? d.ConnectionStart == Convert.ToDateTime(searchValue) : d.ConnectionStart.ToString().Contains(searchValue)) ||
+                        d.Name.ToLower().Contains(searchValue) ||
+                        d.Model.ToLower().Contains(searchValue) ||
+                        (IsDateTime(searchValue) ? d.ConnectionStart == Convert.ToDateTime(searchValue) : d.ConnectionStart.ToString().ToLower().Contains(searchValue)) ||
                         d.MessagesRecieved.ToString().Contains(searchValue) ||
                         d.MessagesMaximum.ToString().Contains(searchValue)                                           
                     );
