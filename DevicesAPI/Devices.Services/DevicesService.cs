@@ -17,7 +17,7 @@ namespace Devices.Services
             IQueryable<Device> resultQuery = _context.Devices.Where(d => d.IsOnline == isOnline);
             if (searchValue != null)
             {
-                resultQuery = _context.Devices
+                resultQuery = resultQuery
                     .Where(d =>
                         d.Name.Contains(searchValue) ||
                         d.Model.Contains(searchValue) ||
