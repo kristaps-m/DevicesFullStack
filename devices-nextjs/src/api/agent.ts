@@ -1,9 +1,6 @@
 import IOneDevice from "@/app/Models/OneDevice";
 import axios, { AxiosError, AxiosResponse } from "axios";
-// import { toast } from "react-toastify";
 
-// axios.defaults.baseURL =
-//   "https://run.mocky.io/v3/de18534a-5ddb-4a32-a7b3-e71910573d4f";
 axios.defaults.baseURL = "https://localhost:5000/api/devices/";
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -26,11 +23,9 @@ axios.interceptors.response.use(
           throw modelStateErrors.flat();
         }
         console.log(data.title);
-        // toast.error(data.title);
         break;
       case 401:
         console.log(data.title);
-        // toast.error(data.title);
         break;
       default:
         break;
@@ -56,7 +51,6 @@ const TestErrors = {
 };
 
 const DeviceCatalog = {
-  // list: () => requests.get("devices"),
   list: () => requests.get("get-all"),
   addDevice: (oneDevice: IOneDevice) => requests.addDevice("add", oneDevice),
   removeDevice: (id: number) => requests.delete(`${id}`),

@@ -2,8 +2,6 @@ import IOneDevice from "@/app/Models/OneDevice";
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 
-// Modal.setAppElement("#your-root-element-id");
-
 interface AddDeviceModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -12,57 +10,29 @@ interface AddDeviceModalProps {
   device?: IOneDevice | null;
 }
 
+const newEmptyDeviceObject: IOneDevice = {
+  id: 0,
+  name: "",
+  model: "",
+  messagesRecieved: 0,
+  messagesMaximum: 0,
+  connectionStart: new Date(),
+  isOnline: false,
+};
+
 const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
   isOpen,
   onRequestClose,
   onSubmit,
   onDelete,
-  device: initialDevice = {
-    id: 0,
-    name: "Can You See Me?",
-    model: "",
-    messagesRecieved: 0,
-    messagesMaximum: 0,
-    connectionStart: new Date(),
-    isOnline: false,
-  },
+  device: initialDevice = newEmptyDeviceObject,
 }) => {
   const [newDevice, setNewDevice] = useState<IOneDevice>(
-    initialDevice || {
-      id: 0,
-      name: "",
-      model: "",
-      messagesRecieved: 0,
-      messagesMaximum: 0,
-      connectionStart: new Date(),
-      isOnline: false,
-    }
+    initialDevice || newEmptyDeviceObject
   );
 
-  const [device, setDevice] = useState<IOneDevice>(
-    initialDevice || {
-      id: 0,
-      name: "",
-      model: "",
-      messagesRecieved: 0,
-      messagesMaximum: 0,
-      connectionStart: new Date(),
-      isOnline: false,
-    }
-  );
   useEffect(() => {
-    console.log("useEffect(()) ... initialDevice:", initialDevice);
-    setNewDevice(
-      initialDevice || {
-        id: 0,
-        name: "",
-        model: "",
-        messagesRecieved: 0,
-        messagesMaximum: 0,
-        connectionStart: new Date(),
-        isOnline: false,
-      }
-    );
+    setNewDevice(initialDevice || newEmptyDeviceObject);
   }, [initialDevice]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +59,6 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
   };
 
   const handleSubmit = () => {
-    // Validate the form fields here
     if (!newDevice.name || !newDevice.model) {
       // If name or model is empty, display an error message or handle it as needed
       alert("Name and Model are required.");
@@ -98,7 +67,6 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
     }
 
     if (newDevice.messagesRecieved < 0 || newDevice.messagesMaximum < 0) {
-      // If messagesRecieved or messagesMaximum are negative, display an error message or handle it as needed
       alert("Messages Received and Messages Maximum must be non-negative.");
       console.error(
         "Messages Received and Messages Maximum must be non-negative."
@@ -112,16 +80,6 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
     if (window.confirm("Are you sure you want to delete this device?")) {
       onDelete?.();
     }
-  };
-
-  const customStyles = {
-    content: {
-      width: "80%", // Set your custom width here
-      height: "66%", // Set your custom height here
-      margin: "auto", // Center the modal horizontally
-      top: "50%", // Center the modal vertically
-      transform: "translateY(-50%)", // Adjust vertical centering
-    },
   };
 
   return (
@@ -181,10 +139,9 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
           Connection Start: {newDevice.connectionStart.toString().split("T")[0]}
           {"  "}
           <input
-            type="date" // datetime-local
+            type="date"
             name="connectionStart"
             value={new Date(newDevice.connectionStart).toISOString()}
-            // onChange={(e) => handleDateChange(new Date(e.target.value))}
             onChange={(e) => handleDateChange(e.target.value)}
           />
         </label>
@@ -198,7 +155,6 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
             onChange={handleCheckboxChange}
             className="w-8 h-8 border-2 border-blue-500 rounded-sm bg-white"
           />
-          {/* <p>{newDevice.isOnline ? "Online" : "Offline"}</p> */}
         </label>
         <br />
         <br />

@@ -8,26 +8,14 @@ import { PageComponentsWrapper } from "../Components/PageComponentsWrapper";
 import IOneDevice from "@/app/Models/OneDevice";
 import AppPagination, { paginate } from "@/Components/AppPagination";
 import Agent from "@/api/agent";
-import AddDeviceModal from "./AddDeviceModal";
-// import { Right } from "./../Components/Right";
-
-interface DataRoot {
-  devices: IOneDevice[];
-}
+import AddDeviceModal from "./AddOrUpdateDeviceModal";
 
 function calculateDaysDifference(givenDate: string | Date) {
-  // Convert the given date string to a Date object
   const givenDateTime: any = new Date(givenDate);
-
   // Get the current date
   const currentDate: any = new Date();
-
   // Calculate the difference in milliseconds
-  const timeDifference =
-    currentDate -
-    givenDateTime -
-    (Math.floor(Math.random() * 25) + 4) * (1000 * 60 * 60 * 24);
-
+  const timeDifference = currentDate - givenDateTime;
   // Convert the difference to days
   const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
@@ -40,7 +28,8 @@ export const Devices = (): JSX.Element => {
   const [currentPage, setCurrentPage] = useState(1);
   const [userSearchValue, setUserSearchValue] = useState("");
   const [searchDevicesByOnlineStatus, setSearchOnlineStatus] = useState(true);
-  const [cliked, setClicked] = useState(false);
+  const [onlineDevicesCount, setOnlineDevicesCount] = useState(0);
+  const [offlineDevicesCount, setOfflineDevicesCount] = useState(0);
   const pageSize = 10;
   const onPageChange = (page: number) => {
     setCurrentPage(page);
@@ -77,7 +66,6 @@ export const Devices = (): JSX.Element => {
   const handleDeviceDelete = async () => {
     if (selectedDevice) {
       try {
-        // Call the removeDevice method from your agent
         await Agent.DeviceCatalog.removeDevice(selectedDevice.id);
         // After deleting a device, refresh the list
         fetchDevices();
@@ -119,7 +107,21 @@ export const Devices = (): JSX.Element => {
     currentPage,
     pageSize
   );
-  console.log(searchDevicesByOnlineStatus);
+
+  useEffect(() => {
+    Agent.DeviceCatalog.list()
+      .then((data: IOneDevice[]) => {
+        const theOnlineCount = data.filter((x) => x.isOnline === true).length;
+        const theOfflineCount = data.filter((x) => x.isOnline === false).length;
+        setOnlineDevicesCount(theOnlineCount);
+        setOfflineDevicesCount(theOfflineCount);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div className="flex flex-col h-[900px] items-start relative bg-x01-theme-colors02-neutral-colorn-300">
       <div className="inline-flex gap-[20px] pt-0 pb-[20px] px-0 bg-x01-theme-colors02-neutral-colorn-800 flex-col items-center relative flex-[0_0_auto]">
@@ -150,7 +152,6 @@ export const Devices = (): JSX.Element => {
                 Add+
               </button>
             </div>
-            {/* abcd */}
           </div>
         </div>
       </div>
@@ -175,7 +176,7 @@ export const Devices = (): JSX.Element => {
                         : "text-x02-semantic-colors01-online-300"
                     }`}
                     onClick={() => {
-                      setSearchOnlineStatus(true), setClicked(true);
+                      setSearchOnlineStatus(true);
                     }}
                   >
                     Online
@@ -187,7 +188,7 @@ export const Devices = (): JSX.Element => {
                         : "bg-x01-theme-colors02-neutral-colorn-100"
                     }`}
                     clearOption={false}
-                    text="2"
+                    text={`${onlineDevicesCount}`}
                     divClassName=""
                   />
                 </div>
@@ -220,12 +221,11 @@ export const Devices = (): JSX.Element => {
                         ? "text-x01-theme-colors02-neutral-colorn-100"
                         : "text-x02-semantic-colors01-dangerdanger-300"
                     }`}
-                    text="3"
+                    text={`${offlineDevicesCount}`}
                   />
                 </div>
               </div>
               {/* --------- End of (online offline) button section --------- */}
-              {/* ------------------ */}
               <AddDeviceModal
                 isOpen={isAddDeviceModalOpen}
                 onRequestClose={closeAddDeviceModal}
@@ -242,7 +242,6 @@ export const Devices = (): JSX.Element => {
                     placeholder="Quick search.."
                     onChange={(e) => {
                       setUserSearchValue(e.target.value);
-                      // props.onResetCurrentPageClick(1); // Reset currentPage to 1 when searching
                     }}
                     className="relative flex-1 [font-family:'Inter-Regular',Helvetica] font-normal text-x01-theme-colors02-neutral-colorn-700 text-[14px] tracking-[-0.20px] leading-[18px]"
                   />
@@ -271,7 +270,7 @@ export const Devices = (): JSX.Element => {
                       />
                       <div className="flex-col items-start flex-1 grow flex relative">
                         <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] tracking-[-0.20px] leading-[22px]">
-                          [{oneDevice.id}] {oneDevice.name}
+                          {oneDevice.name}
                         </div>
                         <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] font-normal text-x01-theme-colors02-neutral-colorn-700 text-[12px] tracking-[-0.20px] leading-[16px]">
                           <span className="font-paragraph-extra-small font-[number:var(--paragraph-extra-small-font-weight)] text-[#5c5f70] text-[length:var(--paragraph-extra-small-font-size)] tracking-[var(--paragraph-extra-small-letter-spacing)] leading-[var(--paragraph-extra-small-line-height)] [font-style:var(--paragraph-extra-small-font-style)]">
@@ -305,16 +304,11 @@ export const Devices = (): JSX.Element => {
                   </div>
                   <div className="inline-flex items-start gap-[4px] relative flex-[0_0_auto]">
                     <ButtonDefault
-                      className="!h-[36px] !gap-[8px] !flex-[0_0_auto] !bg-x01-theme-colors02-neutral-colorn-200"
+                      className="!h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200"
                       text="Settings"
                       valueClassName="!text-x01-theme-colors02-neutral-colorn-800"
+                      openAddDeviceModal={() => openAddDeviceModal(oneDevice)}
                     />
-                    <button
-                      onClick={() => openAddDeviceModal(oneDevice)}
-                      className="!h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200 hover:bg-orange-700"
-                    >
-                      Edit
-                    </button>
                     <ButtonDefault
                       className="!h-[36px] !gap-[8px] !flex-[0_0_auto] !bg-x01-theme-colors02-neutral-colorn-200"
                       text="Control"
@@ -332,12 +326,14 @@ export const Devices = (): JSX.Element => {
               pageSize={pageSize}
               onPageChange={onPageChange}
             />
-            {/* ----------------------------------------------------------- */}
           </div>
           <div className="flex items-center gap-[20px] pl-[20px] pr-[12px] py-[12px] relative self-stretch w-full flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200 rounded-[0px_0px_6px_6px]">
             <p className="relative flex-1 mt-[-1.00px] font-paragraph-default font-[number:var(--paragraph-default-font-weight)] text-x01-theme-colors02-neutral-colorn-700 text-[length:var(--paragraph-default-font-size)] tracking-[var(--paragraph-default-letter-spacing)] leading-[var(--paragraph-default-line-height)] [font-style:var(--paragraph-default-font-style)]">
               Showing {currentPage * pageSize - pageSize + 1} -{" "}
-              {currentPage * pageSize} of {theDivicesLength} devices
+              {theDivicesLength <= pageSize
+                ? theDivicesLength
+                : currentPage * pageSize}{" "}
+              of {theDivicesLength} devices
             </p>
           </div>
           <PageComponentsWrapper className="!absolute !left-0 !top-[846px]" />

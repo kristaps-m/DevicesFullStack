@@ -7,13 +7,3 @@ export default interface IOneDevice {
   connectionStart: string | Date;
   isOnline: boolean;
 }
-
-export default class OneDeviceClass {
-  id!: number;
-  name!: string;
-  model!: string;
-  messagesRecieved!: number;
-  messagesMaximum!: number;
-  connectionStart!: string | Date;
-  isOnline!: boolean;
-}
