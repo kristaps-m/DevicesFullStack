@@ -4,10 +4,7 @@ namespace Devices.Core.Interfaces
 {
     public interface IDevicesService : IEntityService<Device>
     {
-        List<Device> Test(string? searchValue, bool isOnline);
-
-        //CarAverageSpeedResultsInDay CalculateAverageSpeedByHourInDay(DateTime searchData);
-        //List<Device> FilterBySpeedDatefromDateuntil(int? speed, DateTime? dateFrom, DateTime? dateUntil);
+        List<Device> GetDevicesFilteredBySearchInput(string? searchValue, bool isOnline);
         Device UpdateDevice(Device device, int id);
     }
 }

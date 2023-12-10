@@ -11,10 +11,10 @@ namespace Devices.Services
             
         }
 
-        // https://localhost:5000/api/devices/get-all-filtered?searchValue=666
-        public List<Device> Test(string? searchValue, bool isOnline)
+        public List<Device> GetDevicesFilteredBySearchInput(string? searchValue, bool isOnline)
         {            
             IQueryable<Device> resultQuery = _context.Devices.Where(d => d.IsOnline == isOnline);
+
             if (searchValue != null)
             {
                 searchValue = searchValue.ToLower();
@@ -27,33 +27,6 @@ namespace Devices.Services
                         d.MessagesMaximum.ToString().Contains(searchValue)                                           
                     );
             }
-
-            return resultQuery.ToList();
-        }
-
-        public List<Device> FilterBySpeedDatefromDateuntil(int? speed, DateTime? dateFrom, DateTime? dateUntil)
-        {
-            IQueryable<Device> resultQuery = _context.Devices;
-
-            //if (speed.HasValue)
-            //{
-            //    resultQuery = resultQuery.Where(cSpeedStat => cSpeedStat.CarSpeed >= speed.Value);
-            //}
-
-            //if (dateFrom.HasValue)
-            //{
-            //    resultQuery = resultQuery.Where(cSpeedStat => cSpeedStat.CarSpeedDate.Date >= dateFrom.Value.Date);
-            //}
-
-            //if (dateUntil.HasValue)
-            //{
-            //    resultQuery = resultQuery.Where(cSpeedStat => cSpeedStat.CarSpeedDate.Date <= dateUntil.Value.Date);
-            //}
-            //// If no filters are provided, return the first 1000 records
-            //if (!speed.HasValue && !dateFrom.HasValue && !dateUntil.HasValue)
-            //{
-            //    resultQuery = resultQuery.Take(1000);
-            //}
 
             return resultQuery.ToList();
         }

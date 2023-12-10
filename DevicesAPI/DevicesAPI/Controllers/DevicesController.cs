@@ -10,9 +10,9 @@ namespace DevicesAPI.Controllers
     {
         private readonly IDevicesService _devicescService;
 
-        public DevicesController(IDevicesService carSpeedStatisticService)
+        public DevicesController(IDevicesService deviceService)
         {
-            _devicescService = carSpeedStatisticService;
+            _devicescService = deviceService;
         }
 
         [Route("add")]
@@ -26,16 +26,16 @@ namespace DevicesAPI.Controllers
 
         [Route("update")]
         [HttpPut]
-        public IActionResult UpdateDevice(Device newDevice) // int id,
+        public IActionResult UpdateDevice(Device newDevice)
         {
-            var carSpeedStatisticToUpdate = _devicescService.UpdateDevice(newDevice, newDevice.Id);
+            var deviceToUpdate = _devicescService.UpdateDevice(newDevice, newDevice.Id);
 
-            if (carSpeedStatisticToUpdate == null)
+            if (deviceToUpdate == null)
             {
                 return NotFound();
             }
 
-            return Created("", carSpeedStatisticToUpdate);
+            return Created("", deviceToUpdate);
         }
 
         [Route("{id}")]
@@ -45,46 +45,27 @@ namespace DevicesAPI.Controllers
             var objectToDelete = _devicescService.GetById(id);
             _devicescService.Delete(objectToDelete);
 
-            return Ok($"CarSpeedStatistic with id {id} was deleted!");
+            return Ok($"Device with id {id} was deleted!");
         }
 
         [Route("get-all")]
         [HttpGet]
         public IActionResult GetAllDevices()
         {
-            var allCarSpeedStatistic = _devicescService.GetAll();
+            var allDevices = _devicescService.GetAll();
 
-            return Ok(allCarSpeedStatistic);
+            return Ok(allDevices);
         }
 
+        // https://localhost:5000/api/devices/get-all-filtered?searchValue=TX&isOnline=true
         [Route("get-all-filtered")]
         [HttpGet]
         public IActionResult GetAllDevicesFiltered(string? searchValue, bool isOnline)
         {
-            var allCarSpeedStatistic = _devicescService.Test(searchValue, isOnline);
+            var allFilteredDevices = _devicescService.GetDevicesFilteredBySearchInput(searchValue, isOnline);
 
-            return Ok(allCarSpeedStatistic);
+            return Ok(allFilteredDevices);
         }
-        // https://localhost:5000/api/car-speed-statistics/get-filtered?speed=100&dateFrom=2020-08-20&dateUntil=2020-08-21
-        // https://localhost:5000/api/car-speed-statistics/get-filtered?speed=105&dateFrom=&dateUntil=
-        //[Route("get-filtered")]
-        //[HttpGet]
-        //public IActionResult GetBySpeedDatefromDateto(int? speed, DateTime? dateFrom, DateTime? dateUntil)
-        //{
-        //    var allCarSpeedStatistic = _devicescService
-        //        .FilterBySpeedDatefromDateuntil(speed, dateFrom, dateUntil);
-
-        //    return Ok(allCarSpeedStatistic);
-        //}
-
-        //[Route("get-avgspeed-bydate")]
-        //[HttpGet]
-        //public IActionResult GetAllCarSpeedStatisticByDate(DateTime searchByDate)
-        //{
-        //    var allCarSpeedStatistic = _devicescService.CalculateAverageSpeedByHourInDay(searchByDate);
-
-        //    return Ok(allCarSpeedStatistic);
-        //}
 
         [Route("{id}")]
         [HttpGet]
