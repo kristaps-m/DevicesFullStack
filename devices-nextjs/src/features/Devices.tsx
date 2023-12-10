@@ -335,8 +335,8 @@ export const Devices = (): JSX.Element => {
                 : currentPage * pageSize}{" "}
               of {theDivicesLength} devices
             </p>
+            <PageComponentsWrapper className="!absolute !left-0 !top-[50px]" />
           </div>
-          <PageComponentsWrapper className="!absolute !left-0 !top-[846px]" />
         </div>
       </div>
     </div>
