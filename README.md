@@ -17,7 +17,7 @@ https://dotnet.microsoft.com/en-us/download
 
 1. Clone or Download and extract all files and folders inside 'Devices'.
 
-   - DevicesAPI
+   - DevicesFullStack
      - devices-nextjs
      - DevicesAPI
      - readme_pics
