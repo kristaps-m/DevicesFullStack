@@ -1,3 +1,4 @@
+import { TheButton } from "@/Components/TheButton";
 import IOneDevice from "@/app/Models/OneDevice";
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
@@ -158,6 +159,12 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
         </label>
         <br />
         <br />
+        <TheButton
+          className="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+          valueClassName=""
+          onClick={handleSubmit}
+          text={initialDevice?.id ? "Update-N" : "Add-N"}
+        />
         <button
           type="button"
           onClick={handleSubmit}
@@ -175,6 +182,20 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
         >
           Close?
         </button>{" "}
+        <TheButton
+          className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-5xl"
+          valueClassName=""
+          onClick={onRequestClose}
+          text="Close?-N"
+        />
+        {initialDevice?.id && (
+          <TheButton
+            className="py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+            valueClassName=""
+            onClick={handleDelete}
+            text="Delete-N"
+          />
+        )}
         {initialDevice?.id && (
           <button
             type="button"
