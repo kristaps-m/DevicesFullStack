@@ -87,15 +87,22 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className="bg-x01-theme-colors01-primary-colorp-500 w-4/5"
+      className="bg-x01-theme-colors02-neutral-colorn-200 w-4/5"
       style={{ content: { margin: "auto", transform: "translateX(0%)" } }}
     >
-      <h2 className="bg-x01-theme-colors01-primary-colorp-soft text-5xl">
-        {initialDevice?.id
-          ? `Update Device [${newDevice.id}]`
-          : "Add New Device"}
-      </h2>
-      <form className="bg-x01-theme-colors01-primary-colorp-300 text-3xl">
+      <div className="flex items-center justify-between">
+        <h2 className="bg-x01-theme-colors02-neutral-colorn-300 text-5xl">
+          {initialDevice?.id
+            ? `Update Device [${newDevice.id}]`
+            : "Add New Device"}
+        </h2>
+        <TheButton
+          buttonClassName="py-2 px-4 bg-red-300 text-white font-semibold rounded-lg shadow-md hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-5xl"
+          onClick={onRequestClose}
+          text="X"
+        />
+      </div>
+      <form className="bg-x01-theme-colors02-neutral-colorn-200 text-3xl">
         <label>
           Name:
           <input
@@ -147,7 +154,7 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
           />
         </label>
         <br />
-        <label className={newDevice.isOnline ? "bg-green-200" : "bg-red-300"}>
+        <label className={newDevice.isOnline ? "bg-green-400" : "bg-red-400"}>
           {newDevice.isOnline ? "Online: " : "Offline: "}
           <input
             type="checkbox"
@@ -158,21 +165,9 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
           />
         </label>
         <br />
-        <br />
-        <TheButton
-          buttonClassName="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-          onClick={handleSubmit}
-          text={initialDevice?.id ? "Update" : "Add"}
-        />
-        <br />
       </form>
       <br />
       <div className="grid grid-rows-1 grid-flow-col gap-4 mt-20">
-        <TheButton
-          buttonClassName="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-5xl"
-          onClick={onRequestClose}
-          text="Close?"
-        />
         {initialDevice?.id && (
           <TheButton
             buttonClassName="py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
@@ -180,6 +175,11 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
             text="Delete"
           />
         )}
+        <TheButton
+          buttonClassName="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+          onClick={handleSubmit}
+          text={initialDevice?.id ? "Update" : "Add"}
+        />
       </div>
     </Modal>
   );

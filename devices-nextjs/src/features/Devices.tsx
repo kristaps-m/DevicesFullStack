@@ -271,7 +271,7 @@ export const Devices = (): JSX.Element => {
                             Connection:{" "}
                           </span>
                           <span className="[font-family:'Inter-Medium',Helvetica] font-medium">
-                            0%
+                            {oneDevice.isOnline ? "100%" : "0%"}
                           </span>
                         </p>
                       </div>
