@@ -168,11 +168,7 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
         <br />
       </form>
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div className="grid grid-rows-1 grid-flow-col gap-4">
+      <div className="grid grid-rows-1 grid-flow-col gap-4 mt-20">
         <button
           onClick={onRequestClose}
           className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-5xl"

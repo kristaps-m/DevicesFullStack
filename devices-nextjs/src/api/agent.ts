@@ -22,10 +22,10 @@ axios.interceptors.response.use(
           }
           throw modelStateErrors.flat();
         }
-        console.log(data.title);
+        console.error(data.title);
         break;
       case 401:
-        console.log(data.title);
+        console.error(data.title);
         break;
       default:
         break;
