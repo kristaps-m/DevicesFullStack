@@ -21,7 +21,7 @@ export const TheButton = ({
 }: Props): JSX.Element => {
   return (
     <button className={`${buttonClassName}`} onClick={onClick}>
-      <div className={`${divClassName}`}>{text}</div>
+      <div className={`inline-flex items-center ${divClassName}`}>{text}</div>
     </button>
   );
 };
