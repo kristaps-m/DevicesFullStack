@@ -8,7 +8,7 @@ import { PageComponentsWrapper } from "../Components/PageComponentsWrapper";
 import IOneDevice from "@/app/Models/OneDevice";
 import AppPagination, { paginate } from "@/Components/AppPagination";
 import Agent from "@/api/agent";
-import AddDeviceModal from "./AddOrUpdateDeviceModal";
+import AddOrUpdateDeviceModal from "./AddOrUpdateDeviceModal";
 
 function calculateDaysDifference(givenDate: string | Date) {
   const givenDateTime: any = new Date(givenDate);
@@ -226,7 +226,7 @@ export const Devices = (): JSX.Element => {
                 </div>
               </div>
               {/* --------- End of (online offline) button section --------- */}
-              <AddDeviceModal
+              <AddOrUpdateDeviceModal
                 isOpen={isAddDeviceModalOpen}
                 onRequestClose={closeAddDeviceModal}
                 onSubmit={handleAddDeviceSubmit}
@@ -303,6 +303,7 @@ export const Devices = (): JSX.Element => {
                     </div>
                   </div>
                   <div className="inline-flex items-start gap-[4px] relative flex-[0_0_auto]">
+                    <button className="">SUP</button>
                     <ButtonDefault
                       className="!h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200"
                       text="Settings"

@@ -8,8 +8,8 @@ import PropTypes from "prop-types";
 import React from "react";
 
 interface Props {
-  className: any;
-  valueClassName: any;
+  className: string;
+  valueClassName: string;
   text: string;
   openAddDeviceModal?: (device?: IOneDevice | null) => void;
 }
