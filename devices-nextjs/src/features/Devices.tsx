@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { ButtonDefault } from "../Components/ButtonDefault";
 import { IconSearch } from "../Components/IconSearch";
 import { Label } from "../Components/Label";
 import { PageComponents } from "../Components/PageComponents";
@@ -9,6 +8,7 @@ import IOneDevice from "@/app/Models/OneDevice";
 import AppPagination, { paginate } from "@/Components/AppPagination";
 import Agent from "@/api/agent";
 import AddOrUpdateDeviceModal from "./AddOrUpdateDeviceModal";
+import { TheButton } from "@/Components/TheButton";
 
 function calculateDaysDifference(givenDate: string | Date) {
   const givenDateTime: any = new Date(givenDate);
@@ -144,13 +144,11 @@ export const Devices = (): JSX.Element => {
             </div>
             <div className="relative self-stretch [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[21px] tracking-[-0.30px] leading-[28px]">
               Devices{" "}
-              <button
-                type="button"
+              <TheButton
+                buttonClassName="!h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-800 border border-solid border-x01-theme-colors01-primary-colorp-soft rounded-[6px] hover:bg-x01-theme-colors01-primary-colorp-soft"
+                text="Add+"
                 onClick={() => openAddDeviceModal()}
-                className="!h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-800 border border-solid border-x01-theme-colors01-primary-colorp-soft rounded-[6px] hover:bg-x01-theme-colors01-primary-colorp-soft"
-              >
-                Add+
-              </button>
+              />
             </div>
           </div>
         </div>
@@ -169,18 +167,15 @@ export const Devices = (): JSX.Element => {
                       : "bg-x01-theme-colors02-neutral-colorn-100 border-solid border-x01-theme-colors02-neutral-colorn-400"
                   }`}
                 >
-                  <button
-                    className={`relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap ${
+                  <TheButton
+                    buttonClassName={`relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-800 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap ${
                       searchDevicesByOnlineStatus
                         ? "text-x01-theme-colors02-neutral-colorn-800"
                         : "text-x02-semantic-colors01-online-300"
                     }`}
-                    onClick={() => {
-                      setSearchOnlineStatus(true);
-                    }}
-                  >
-                    Online
-                  </button>
+                    text="Online"
+                    onClick={() => setSearchOnlineStatus(true)}
+                  />
                   <Label
                     className={`!flex-[0_0_auto] ${
                       searchDevicesByOnlineStatus
@@ -199,16 +194,15 @@ export const Devices = (): JSX.Element => {
                       : "bg-x01-theme-colors01-primary-colorp-300 border-solid border-x02-semantic-colors01-dangerdanger-300"
                   }`}
                 >
-                  <button
-                    className={`relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap ${
+                  <TheButton
+                    buttonClassName={`relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap ${
                       !searchDevicesByOnlineStatus
                         ? "text-x01-theme-colors02-neutral-colorn-100"
                         : "text-x02-semantic-colors01-dangerdanger-300"
                     }`}
+                    text="Offline"
                     onClick={() => setSearchOnlineStatus(false)}
-                  >
-                    Offline
-                  </button>
+                  />
                   <Label
                     className={`!flex-[0_0_auto] ${
                       !searchDevicesByOnlineStatus
@@ -303,17 +297,16 @@ export const Devices = (): JSX.Element => {
                     </div>
                   </div>
                   <div className="inline-flex items-start gap-[4px] relative flex-[0_0_auto]">
-                    <button className="">SUP</button>
-                    <ButtonDefault
-                      className="!h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200"
+                    <TheButton
+                      buttonClassName="inline-flex items-center justify-center gap-[10px] px-[16px] py-[8px] relative bg-x01-theme-colors01-primary-colorp-300 rounded-[6px] all-[unset] box-border !h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200 hover:bg-x01-theme-colors01-primary-colorp-300"
+                      divClassName="relative w-fit [font-family:'Inter',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap !text-x01-theme-colors02-neutral-colorn-800"
+                      onClick={() => openAddDeviceModal(oneDevice)}
                       text="Settings"
-                      valueClassName="!text-x01-theme-colors02-neutral-colorn-800"
-                      openAddDeviceModal={() => openAddDeviceModal(oneDevice)}
                     />
-                    <ButtonDefault
-                      className="!h-[36px] !gap-[8px] !flex-[0_0_auto] !bg-x01-theme-colors02-neutral-colorn-200"
+                    <TheButton
+                      buttonClassName="inline-flex items-center justify-center gap-[10px] px-[16px] py-[8px] relative bg-x01-theme-colors01-primary-colorp-300 rounded-[6px] all-[unset] box-border !h-[36px] !gap-[8px] !flex-[0_0_auto] bg-x01-theme-colors02-neutral-colorn-200"
+                      divClassName="relative w-fit [font-family:'Inter',Helvetica] font-medium text-x01-theme-colors02-neutral-colorn-100 text-[14px] text-center tracking-[-0.20px] leading-[20px] whitespace-nowrap !text-x01-theme-colors02-neutral-colorn-800"
                       text="Control"
-                      valueClassName="!text-x01-theme-colors02-neutral-colorn-800"
                     />
                     <div className="flex w-[36px] h-[36px] items-center justify-center relative bg-x01-theme-colors02-neutral-colorn-100 rounded-[6px]"></div>
                   </div>

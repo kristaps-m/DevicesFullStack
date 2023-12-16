@@ -160,50 +160,25 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({
         <br />
         <br />
         <TheButton
-          className="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-          valueClassName=""
+          buttonClassName="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
           onClick={handleSubmit}
-          text={initialDevice?.id ? "Update-N" : "Add-N"}
+          text={initialDevice?.id ? "Update" : "Add"}
         />
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-        >
-          {initialDevice?.id ? "Update" : "Add"}
-        </button>
         <br />
       </form>
       <br />
       <div className="grid grid-rows-1 grid-flow-col gap-4 mt-20">
-        <button
-          onClick={onRequestClose}
-          className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-5xl"
-        >
-          Close?
-        </button>{" "}
         <TheButton
-          className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-5xl"
-          valueClassName=""
+          buttonClassName="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-5xl"
           onClick={onRequestClose}
-          text="Close?-N"
+          text="Close?"
         />
         {initialDevice?.id && (
           <TheButton
-            className="py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-            valueClassName=""
+            buttonClassName="py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
             onClick={handleDelete}
-            text="Delete-N"
+            text="Delete"
           />
-        )}
-        {initialDevice?.id && (
-          <button
-            type="button"
-            onClick={handleDelete}
-            className="py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-          >
-            Delete
-          </button>
         )}
       </div>
     </Modal>
